@@ -3765,6 +3765,12 @@ const TowerCore = (function(Matter){
       S.fallBonus = Math.min(38, S.fallBonus + 1.4);
       S.events.push({ t:'land', type:b.ptype, x:b.position.x, y:b.position.y });
     }
+    function miss(b){
+      Body.setStatic(b, false);
+      Body.setVelocity(b, { x:0, y:S.fast ? 8 : 2 }); Body.setAngularVelocity(b, 0);
+      S.pieces.push(b); Composite.add(engine.world, b);
+      S.active = null; S.nextAt = S.time + SPAWN_DELAY; S.fast = false;
+    }
     function moveActive(dt){
       const b = S.active; if(!b) return;
       // 좌우
@@ -3778,6 +3784,7 @@ const TowerCore = (function(Matter){
       for(let i = 0; i < n; i++){
         Body.setPosition(b, { x:b.position.x, y:b.position.y + st });
         if(hits(b)){ Body.setPosition(b, { x:b.position.x, y:b.position.y - st }); land(b); return; }
+        if(b.bounds.min.y > Y0 + PLAT_H + 4){ miss(b); return; }      // 받침대·조각에 한 번도 안 닿고 옆으로 지나쳐 내려감 → 일반 물체로 바꿔 떨어뜨림(아래서 하트 −1 후 다음 조각)
       }
     }
     function height(){                                     // 받침대 위에 놓인 조각들의 가장 높은 곳(칸 단위)
