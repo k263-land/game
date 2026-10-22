@@ -3,7 +3,8 @@
 // ㆍ인터넷이 되면 항상 서버의 최신 index.html 을 먼저 받고(받은 것은 저장해 둠), 안 되면 저장본을 엽니다.
 //   → 새 버전을 올리면 다음에 인터넷 될 때 자동으로 바뀝니다. 캐시 이름을 바꿀 필요는 없습니다.
 const CACHE = 'haha-offline-v1';
-const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const ROOT = new URL('./', self.registration.scope).pathname;   // 이 사이트의 맨 위 주소(예: /repo/)
+const CORE = ['./', './index.html', './dim/', './rota/', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];   // 98-55차: './dim/'(차원 원정대 독립 페이지) 추가 / 98-59차: './rota/'(로타 독립 페이지) 추가 — 아직 올리지 않았으면 건너뜀
 
 async function saveCore(){
   const c = await caches.open(CACHE);
@@ -36,11 +37,12 @@ self.addEventListener('fetch', e=>{
       const c = await caches.open(CACHE);
       try{
         const r = await Promise.race([ fetch(req), new Promise((_, no)=>setTimeout(()=>no(new Error('timeout')), 4000)) ]);
-        if(r && r.ok) c.put(req.mode === 'navigate' ? './index.html' : req, r.clone());
+        const isRoot = url.pathname === ROOT || url.pathname === ROOT + 'index.html';   // 98-55차: 하위 폴더(dim/) 화면이 본체 저장본(./index.html)을 덮어쓰지 않게
+        if(r && r.ok) c.put(req.mode === 'navigate' && isRoot ? './index.html' : req, r.clone());
         return r;
       }catch(err){
         return (await c.match(req, { ignoreSearch:true }))
-            || (req.mode === 'navigate' ? (await c.match('./index.html')) || (await c.match('./')) : undefined)
+            || (req.mode === 'navigate' && (url.pathname === ROOT || url.pathname === ROOT + 'index.html') ? (await c.match('./index.html')) || (await c.match('./')) : undefined)
             || Response.error();
       }
     })());
