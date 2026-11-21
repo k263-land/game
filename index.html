@@ -211,44 +211,93 @@
 .arc-hartris .arc-btns{display:flex;flex-wrap:nowrap;gap:6px;width:100%}
 .arc-hartris .arc-btns .btn{flex:1 1 0;min-width:0;white-space:nowrap;padding:9px 4px;font-size:13.5px;letter-spacing:-.2px}
 @media (max-width:340px){.arc-hartris .arc-btns{flex-direction:column}}
-</style><style id="knight-css">/* 98-67차 — 기사의 여정 */
-.arc-knight .arc-screen{width:100%;max-width:max(290px,calc((100vh - 270px) * .643));margin:0 auto}
+</style><style id="knight-css">/* 98-73차 — 울타리 치기 · 기사의 여정 공통 화면(땅따먹기식 판 · 전체 화면 선택 · 작은 버튼 · 줄바꿈 방지) */
+.arc-knight .arc-screen{width:100%;max-width:none;margin:0 auto;border-radius:16px;overflow:hidden;background:#f3e8cc}
 .arc-knight .arc-hud{grid-template-columns:1fr 1.25fr 1.25fr;gap:5px}
-.arc-knight .arc-hud span{padding:4px 7px}
-.arc-pad-knight{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;width:100%;max-width:max(290px,calc((100vh - 270px) * .643));margin:0 auto}
-.arc-pad-knight .arc-bigbtn{flex:1 1 28%;min-width:0;white-space:nowrap;padding-left:2px;padding-right:2px;user-select:none;-webkit-user-select:none}
-.arc-pad-knight .arc-bigbtn.mv{font-size:14.5px;padding-top:12px;padding-bottom:12px}
-.arc-pad-knight .arc-bigbtn.sm{flex:1 1 28%;font-size:13px}
-.arc-pad-knight .row2{flex-basis:100%;height:0}
-.arc-pad-knight .arc-bigbtn.pulse{animation:knpulse .7s ease-in-out infinite}
-@keyframes knpulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,210,60,.7)}50%{transform:scale(1.05);box-shadow:0 0 0 8px rgba(255,210,60,0)}}
+.arc-knight .arc-hud span{padding:4px 7px;min-width:0;overflow:hidden}
+.arc-knight .arc-hud span:nth-child(3){display:block}
+.arc-knight .arc-hud span small,.arc-knight .arc-hud span b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arc-pad-knight{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;width:100%;margin:0 auto}
 .arc-knight .arc-over .arc-card{max-width:calc(100% - 20px);max-height:calc(100% - 16px);overflow:auto;box-sizing:border-box}
 .arc-knight .arc-btns{display:flex;flex-wrap:nowrap;gap:6px;width:100%}
 .arc-knight .arc-btns .btn{flex:1 1 0;min-width:0;white-space:nowrap;padding:9px 4px;font-size:13.5px;letter-spacing:-.2px}
-</style><style id="fence-css">/* 98-70차 — 울타리 치기 */
+.arc-knight .arc-tip,.arc-knight .arc-card p,.arc-knight .arc-toast{word-break:keep-all;overflow-wrap:break-word}
+.arc-knight .arc-card h3,.arc-knight .arc-card .arc-big{white-space:nowrap}
+.arc-knight .arc-name b,.arc-knight .arc-name small,.arc-knight .arc-stat{white-space:nowrap}
+/* 작고 깔끔한 버튼 한 줄 + ⋯ 더보기 */
+.arc-knight .fn-btn{flex:1 1 0;min-width:0;height:38px;border-radius:12px;border:1px solid rgba(107,88,54,.38);background:#fffdf5;color:#4a3a1c;font-family:inherit;font-weight:700;font-size:13.5px;line-height:1;white-space:nowrap;padding:0 2px;cursor:pointer;user-select:none;-webkit-user-select:none;box-shadow:0 1px 0 rgba(107,88,54,.18)}
+.arc-knight .fn-btn:active{transform:scale(.97);background:#f3e8cc}
+.arc-knight .fn-btn.on{background:#ffe9a6;border-color:#c99a1e}
+.arc-knight .fn-btn.fn-mb{flex:0 0 42px;font-size:18px;letter-spacing:1px}
+.arc-knight .fn-btn.pulse{animation:fnpulse .7s ease-in-out infinite}
+@keyframes fnpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,170,30,.75)}50%{box-shadow:0 0 0 7px rgba(255,170,30,0)}}
+.arc-knight .fn-more{display:none;flex:1 0 100%;flex-wrap:wrap;gap:6px}
+.arc-knight .fn-more.on{display:flex}
+.arc-knight .fn-mi{flex:1 1 calc(50% - 3px);min-width:0;height:34px;border-radius:10px;border:1px solid rgba(107,88,54,.25);background:#f6eed8;color:#4a3a1c;font-family:inherit;font-weight:700;font-size:12.5px;white-space:nowrap;padding:0 4px;cursor:pointer}
+.arc-knight .fn-mi:active{background:#eadcb8}
+/* 전체 화면 선택 페이지 */
+.arc-knight .fn-selpg{display:none;position:relative;background:linear-gradient(#fcf6e6,#f3e8cc);border-radius:16px;padding:14px 12px 16px;color:#4a3a1c;min-height:60vh}
+.arc-knight.fn-selmode .fn-selpg{display:block}
+.arc-knight.fn-selmode .arc-screen,.arc-knight.fn-selmode .arc-hud,.arc-knight.fn-selmode .arc-pad,.arc-knight.fn-selmode .arc-tip{display:none}
+.arc-knight .fn-hero{text-align:center;margin-bottom:4px}
+.arc-knight .fn-hero h3{margin:0 0 4px;font-size:22px;white-space:nowrap}
+.arc-knight .fn-hero p{margin:0;font-size:12.5px;opacity:.8;word-break:keep-all;line-height:1.45}
+.arc-knight .fn-make{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(252,246,230,.93);border-radius:16px;z-index:5}
+.arc-knight .fn-make h3{margin:0 0 6px;white-space:nowrap}.arc-knight .fn-make p{margin:0;opacity:.8}
+.arc-knight .fn-selpg .fn-sec{display:flex;align-items:baseline;gap:6px;margin:16px 0 8px;white-space:nowrap;overflow:hidden;text-align:left}
+.arc-knight .fn-selpg .fn-sec b{font-size:15.5px;flex:none}
+.arc-knight .fn-selpg .fn-sec small{font-size:11.5px;opacity:.65;font-weight:600;overflow:hidden;text-overflow:ellipsis;margin:0}
+.arc-knight .fn-sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.arc-knight .fn-sizes.c4{grid-template-columns:repeat(4,1fr)}
+.arc-knight .fn-sizes button{display:flex;flex-direction:column;align-items:center;gap:1px;padding:9px 2px 8px;border-radius:12px;border:1px solid rgba(107,88,54,.25);background:#fffdf5;font:inherit;color:inherit;cursor:pointer;min-width:0;overflow:hidden}
+.arc-knight .fn-sizes button:active{transform:scale(.96)}
+.arc-knight .fn-sizes button b{font-size:18px;white-space:nowrap}
+.arc-knight .fn-sizes button small{font-size:11px;opacity:.7}
+.arc-knight .fn-sizes button i{font-style:normal;font-size:10.5px;color:#1e7a3a}
+.arc-knight .fn-sizes button small,.arc-knight .fn-sizes button i{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.arc-knight .fn-selpg .b2b-th{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:12px 0 6px;font-weight:800;font-size:13px}
+.arc-knight .fn-selpg .b2b-levels button{white-space:nowrap;overflow:hidden}
+.arc-knight .fn-selpg .b2b-levels button small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 이어하기 카드 · 게임 방법 */
+.arc-knight .fn-resume{display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;margin:10px 0 2px;padding:11px 8px;border-radius:14px;border:2px solid #e0762a;background:#fff3df;color:#4a3a1c;font:inherit;cursor:pointer;min-width:0;overflow:hidden}
+.arc-knight .fn-resume .rl{font-weight:900;font-size:16px;white-space:nowrap}
+.arc-knight .fn-resume .rm{font-size:12px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.arc-knight .fn-how{margin:10px 0 0;border-radius:14px;background:#fffdf5;border:1px solid rgba(107,88,54,.25);padding:0 10px}
+.arc-knight .fn-how summary{padding:10px 2px;font-weight:800;cursor:pointer;font-size:14.5px;white-space:nowrap}
+.arc-knight .fn-howb{display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:10px;text-align:left}
+.arc-knight .fn-howb ul{margin:0;padding:0;list-style:none;font-size:12.5px;line-height:1.5;word-break:keep-all;width:100%}
+.arc-knight .fn-howb li{margin:5px 0}
+
+/* 98-74차 — 판 밖 스크롤 · 선택 화면 정리 */
+.arc-knight canvas{touch-action:pan-y;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.arc-knight .fn-hit{position:absolute;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.arc-knight .fn-selpg .fn-sizes button{padding:10px 2px}
+.arc-knight .fn-selpg .fn-sizes button b{font-size:17px}
+</style><style id="fence-css">/* 98-73차 — 울타리 치기 · 기사의 여정 공통 화면(땅따먹기식 판 · 전체 화면 선택 · 작은 버튼 · 줄바꿈 방지) */
 .arc-fence .arc-screen{width:100%;max-width:none;margin:0 auto;border-radius:16px;overflow:hidden;background:#f3e8cc}
 .arc-fence .arc-hud{grid-template-columns:1fr 1.25fr 1.25fr;gap:5px}
-.arc-fence .arc-hud span{padding:4px 7px}
+.arc-fence .arc-hud span{padding:4px 7px;min-width:0;overflow:hidden}
+.arc-fence .arc-hud span:nth-child(3){display:block}
+.arc-fence .arc-hud span small,.arc-fence .arc-hud span b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .arc-pad-fence{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;width:100%;margin:0 auto}
-.arc-pad-fence .arc-bigbtn{flex:1 1 28%;min-width:0;white-space:nowrap;padding-left:2px;padding-right:2px;user-select:none;-webkit-user-select:none}
-.arc-pad-fence .arc-bigbtn.mv{font-size:14.5px;padding-top:12px;padding-bottom:12px}
-.arc-pad-fence .arc-bigbtn.sm{flex:1 1 28%;font-size:13px}
-.arc-pad-fence .row2{flex-basis:100%;height:0}
 .arc-fence .arc-over .arc-card{max-width:calc(100% - 20px);max-height:calc(100% - 16px);overflow:auto;box-sizing:border-box}
 .arc-fence .arc-btns{display:flex;flex-wrap:nowrap;gap:6px;width:100%}
 .arc-fence .arc-btns .btn{flex:1 1 0;min-width:0;white-space:nowrap;padding:9px 4px;font-size:13.5px;letter-spacing:-.2px}
-/* 98-71차 — 오늘의 문제 · 랜덤 · 확대 */
-.arc-fence .fn-sec{margin:12px 0 6px;font-weight:800;font-size:14.5px;text-align:left}
-.arc-fence .fn-sec small{font-weight:600;opacity:.65;font-size:11.5px;margin-left:4px}
-.arc-fence .fn-sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.arc-fence .fn-sizes button{display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 2px 6px;border-radius:12px;border:1px solid rgba(0,0,0,.14);background:#fff;font:inherit;color:inherit;cursor:pointer;min-width:0}
-.arc-fence .fn-sizes button b{font-size:16px}
-.arc-fence .fn-sizes button small{font-size:11px;opacity:.7}
-.arc-fence .fn-sizes button i{font-style:normal;font-size:10.5px;color:#1e7a3a;white-space:nowrap}
-.arc-fence .fn-sizes button:active{transform:scale(.96)}
-.arc-fence .fn-tg{width:100%;margin-top:12px;padding:10px;border-radius:12px;border:1px dashed rgba(0,0,0,.3);background:rgba(255,255,255,.6);font:inherit;font-weight:800;color:inherit;cursor:pointer}
-
-/* 98-72차 — 땅따먹기식 판 · 전체 화면 선택 · 줄바꿈 방지 */
+.arc-fence .arc-tip,.arc-fence .arc-card p,.arc-fence .arc-toast{word-break:keep-all;overflow-wrap:break-word}
+.arc-fence .arc-card h3,.arc-fence .arc-card .arc-big{white-space:nowrap}
+.arc-fence .arc-name b,.arc-fence .arc-name small,.arc-fence .arc-stat{white-space:nowrap}
+/* 작고 깔끔한 버튼 한 줄 + ⋯ 더보기 */
+.arc-fence .fn-btn{flex:1 1 0;min-width:0;height:38px;border-radius:12px;border:1px solid rgba(107,88,54,.38);background:#fffdf5;color:#4a3a1c;font-family:inherit;font-weight:700;font-size:13.5px;line-height:1;white-space:nowrap;padding:0 2px;cursor:pointer;user-select:none;-webkit-user-select:none;box-shadow:0 1px 0 rgba(107,88,54,.18)}
+.arc-fence .fn-btn:active{transform:scale(.97);background:#f3e8cc}
+.arc-fence .fn-btn.on{background:#ffe9a6;border-color:#c99a1e}
+.arc-fence .fn-btn.fn-mb{flex:0 0 42px;font-size:18px;letter-spacing:1px}
+.arc-fence .fn-btn.pulse{animation:fnpulse .7s ease-in-out infinite}
+@keyframes fnpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,170,30,.75)}50%{box-shadow:0 0 0 7px rgba(255,170,30,0)}}
+.arc-fence .fn-more{display:none;flex:1 0 100%;flex-wrap:wrap;gap:6px}
+.arc-fence .fn-more.on{display:flex}
+.arc-fence .fn-mi{flex:1 1 calc(50% - 3px);min-width:0;height:34px;border-radius:10px;border:1px solid rgba(107,88,54,.25);background:#f6eed8;color:#4a3a1c;font-family:inherit;font-weight:700;font-size:12.5px;white-space:nowrap;padding:0 4px;cursor:pointer}
+.arc-fence .fn-mi:active{background:#eadcb8}
+/* 전체 화면 선택 페이지 */
 .arc-fence .fn-selpg{display:none;position:relative;background:linear-gradient(#fcf6e6,#f3e8cc);border-radius:16px;padding:14px 12px 16px;color:#4a3a1c;min-height:60vh}
 .arc-fence.fn-selmode .fn-selpg{display:block}
 .arc-fence.fn-selmode .arc-screen,.arc-fence.fn-selmode .arc-hud,.arc-fence.fn-selmode .arc-pad,.arc-fence.fn-selmode .arc-tip{display:none}
@@ -260,17 +309,32 @@
 .arc-fence .fn-selpg .fn-sec{display:flex;align-items:baseline;gap:6px;margin:16px 0 8px;white-space:nowrap;overflow:hidden;text-align:left}
 .arc-fence .fn-selpg .fn-sec b{font-size:15.5px;flex:none}
 .arc-fence .fn-selpg .fn-sec small{font-size:11.5px;opacity:.65;font-weight:600;overflow:hidden;text-overflow:ellipsis;margin:0}
-.arc-fence .fn-selpg .fn-sizes button{background:#fffdf5;border-color:rgba(107,88,54,.25);padding:9px 2px 8px;overflow:hidden}
+.arc-fence .fn-sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.arc-fence .fn-sizes.c4{grid-template-columns:repeat(4,1fr)}
+.arc-fence .fn-sizes button{display:flex;flex-direction:column;align-items:center;gap:1px;padding:9px 2px 8px;border-radius:12px;border:1px solid rgba(107,88,54,.25);background:#fffdf5;font:inherit;color:inherit;cursor:pointer;min-width:0;overflow:hidden}
+.arc-fence .fn-sizes button:active{transform:scale(.96)}
 .arc-fence .fn-sizes button b{font-size:18px;white-space:nowrap}
+.arc-fence .fn-sizes button small{font-size:11px;opacity:.7}
+.arc-fence .fn-sizes button i{font-style:normal;font-size:10.5px;color:#1e7a3a}
 .arc-fence .fn-sizes button small,.arc-fence .fn-sizes button i{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
 .arc-fence .fn-selpg .b2b-th{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:12px 0 6px;font-weight:800;font-size:13px}
 .arc-fence .fn-selpg .b2b-levels button{white-space:nowrap;overflow:hidden}
 .arc-fence .fn-selpg .b2b-levels button small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.arc-fence .arc-hud span{min-width:0;overflow:hidden}
-.arc-fence .arc-hud span small,.arc-fence .arc-hud span b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.arc-fence .arc-tip,.arc-fence .arc-card p,.arc-fence .arc-toast{word-break:keep-all;overflow-wrap:break-word}
-.arc-fence .arc-card h3,.arc-fence .arc-card .arc-big{white-space:nowrap}
-.arc-fence .arc-name b,.arc-fence .arc-name small,.arc-fence .arc-stat{white-space:nowrap}
+/* 이어하기 카드 · 게임 방법 */
+.arc-fence .fn-resume{display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;margin:10px 0 2px;padding:11px 8px;border-radius:14px;border:2px solid #e0762a;background:#fff3df;color:#4a3a1c;font:inherit;cursor:pointer;min-width:0;overflow:hidden}
+.arc-fence .fn-resume .rl{font-weight:900;font-size:16px;white-space:nowrap}
+.arc-fence .fn-resume .rm{font-size:12px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.arc-fence .fn-how{margin:10px 0 0;border-radius:14px;background:#fffdf5;border:1px solid rgba(107,88,54,.25);padding:0 10px}
+.arc-fence .fn-how summary{padding:10px 2px;font-weight:800;cursor:pointer;font-size:14.5px;white-space:nowrap}
+.arc-fence .fn-howb{display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:10px;text-align:left}
+.arc-fence .fn-howb ul{margin:0;padding:0;list-style:none;font-size:12.5px;line-height:1.5;word-break:keep-all;width:100%}
+.arc-fence .fn-howb li{margin:5px 0}
+
+/* 98-74차 — 판 밖 스크롤 · 선택 화면 정리 */
+.arc-fence canvas{touch-action:pan-y;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.arc-fence .fn-hit{position:absolute;touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.arc-fence .fn-selpg .fn-sizes button{padding:10px 2px}
+.arc-fence .fn-selpg .fn-sizes button b{font-size:17px}
 </style></head>
 <body data-theme="wood">
 <div class="wrap">
@@ -1311,8 +1375,10 @@ style="display:none;">🔀 순서 정하기</button>
 <ul>
 <li>♞ 체스의 <strong>나이트</strong>는 한쪽으로 <strong>2칸</strong>, 옆으로 <strong>1칸</strong> — 알파벳 <strong>L자</strong>로 뛰어요. 내 캐릭터가 나이트가 되어, <strong>막힌 칸(돌·나무)을 뺀 모든 칸을 딱 한 번씩만</strong> 밟으면 여정 성공!</li>
 <li>갈 수 있는 칸은 <strong>반짝이는 노란 점</strong>으로 보여요. <strong>내 캐릭터를 꾹 잡고 끌어서</strong> 그 칸에 놓으면 폴짝 뛰어가요(칸을 톡 눌러도 돼요). 놓은 곳이 갈 수 없는 칸이면 제자리로 돌아와요. 밟은 칸에는 번호와 길이 남아요. 갈 곳이 없는데 칸이 남으면 <strong>막혔어요!</strong> — ↩ 되돌리기로 돌아가 다른 길을 찾아요.</li>
-<li>도움 버튼: ↩ <strong>되돌리기</strong>(한 칸씩) · 💡 <strong>힌트</strong>(다음에 갈 칸을 빨갛게 알려줘요 — 이 길로는 못 간다면 그것도 알려줘요) · 🔢 <strong>길잡이</strong>(갈 수 있는 칸마다 &quot;거기서 또 갈 수 있는 길 수&quot;가 보여요. <strong>작은 숫자부터</strong> 가면 막히지 않아요 — 옛날 수학자 Warnsdorff의 요령!).</li>
+<li>도움 버튼: ↩ <strong>되돌리기</strong>(한 칸씩) · 💡 <strong>힌트</strong>(다음에 갈 칸을 빨갛게 알려줘요 — 이 길로는 못 간다면 그것도 알려줘요) · 🔢 <strong>길잡이</strong>(갈 수 있는 칸마다 &quot;거기서 또 갈 수 있는 길 수&quot;가 보여요. <strong>작은 숫자부터</strong> 가면 막히지 않아요 — 옛날 수학자 Warnsdorff의 요령!). <strong>⋯</strong>를 누르면 판 선택 · 다시 · 게임 방법이 나와요.</li>
 <li>도움을 하나도 안 쓰면 <strong>★3</strong>, 조금만 쓰면 ★2, 많이 쓰면 ★1이에요. 판은 모두 <strong>30개</strong> — 🌲 숲속 5×5 → ⛰️ 설산 6×6 → 🌌 우주 7×7 → 🏜️ 노을 사막 8×8 순서로 어려워져요. 모은 별은 가족 순위에 올라가요. 너무 막히면(도움 8번 이상) ⏭ <strong>건너뛰기</strong>도 돼요.</li>
+<li>🎲 <strong>판 크기 선택</strong>: 5×5(입문) · 6×6(중급) · 7×7(도전) · 8×8(고수) 중에서 골라요. 누를 때마다 <strong>새 문제</strong>가 만들어지고(항상 풀려요), 걸린 <strong>시간</strong>과 도움 없이 푼 <strong>최고 기록</strong>이 남아요.</li>
+<li>💾 <strong>이어하기</strong>: 풀다가 나가도 자동 저장돼요. 판 선택 화면 맨 위 <strong>▶ 이어하기</strong>로 이어서 해요(가족마다 1판).</li>
 </ul>
 </div>
 <div class="rules-block" data-rules="fence">
@@ -1321,9 +1387,10 @@ style="display:none;">🔀 순서 정하기</button>
 <li><strong>🔢 숫자</strong><br>칸 안의 숫자는 그 칸의 <strong>네 변 중 선이 있는 변의 수</strong>예요. 3이면 세 변, 0이면 한 변도 없어요. 숫자가 없는 칸은 몇 개든 괜찮아요.</li>
 <li><strong>🚫 약속</strong><br>선은 <strong>갈라지거나 서로 만나 겹치면 안 돼요</strong>. 한 점에는 선이 <strong>0개 아니면 2개</strong>만 닿아요. 고리는 딱 <strong>하나</strong>예요.</li>
 <li><strong>✏️ 선 긋기</strong><br>점 사이를 <strong>톡</strong> 누르면 선, <strong>한 번 더</strong> 누르면 <strong>✕</strong>(여긴 선이 아니라는 표시), <strong>또 누르면</strong> 지워져요. 손가락을 <strong>끌면</strong> 쭉 그려져요. 숫자가 딱 맞으면 <strong>초록색</strong>이 되고, 넘치면 <strong>빨간색</strong>이에요.</li>
-<li><strong>🆘 도움</strong><br>↩ <strong>되돌리기</strong>(마음껏) · 💡 <strong>힌트</strong>(다음에 그을 선을 알려줘요. 틀린 선이 있으면 그걸 먼저 빨갛게 보여줘요) · ✅ <strong>확인</strong>(틀린 선 찾기).</li>
+<li><strong>🆘 도움</strong><br>↩ <strong>되돌리기</strong>(마음껏) · 💡 <strong>힌트</strong>(다음에 그을 선을 알려줘요. 틀린 선이 있으면 그걸 먼저 빨갛게 보여줘요) · ✅ <strong>확인</strong>(틀린 선 찾기). <strong>⋯</strong>를 누르면 판 선택 · 다시 · 게임 방법이 나와요.</li>
+<li><strong>💾 이어하기</strong><br>풀다가 나가도 <strong>자동 저장</strong>돼요. 판 선택 화면 맨 위의 <strong>▶ 이어하기</strong>를 누르면 그 상태 그대로 이어서 해요. 가족마다 1판씩 저장돼요.</li>
 <li><strong>🎲 오늘의 문제 · 랜덤 문제</strong><br>5×5(입문) · 7×7(중급) · 10×10(도전) · 12×12(고수) · 15×15(달인) · 20×20(극한) 중에서 골라요. <strong>오늘의 문제</strong>는 날마다 새로 바뀌고 온 가족이 같은 문제예요. <strong>랜덤 문제</strong>는 누를 때마다 새 문제를 만들어요. 푸는 데 걸린 <strong>시간</strong>을 재고, 도움을 안 쓰고 푼 <strong>최고 기록</strong>이 남아요.</li>
-<li><strong>🔍 확대 · 이동</strong><br>큰 판은 <strong>두 손가락으로 벌리면 확대</strong>, 모으면 축소, 두 손가락으로 끌면 화면이 움직여요. 화면 오른쪽 <strong>＋ − ⤢</strong> 단추로도 되고, <strong>✋</strong>를 켜면 한 손가락으로 화면을 옮길 수 있어요(PC는 마우스 휠).</li>
+<li><strong>🔍 확대 · 이동</strong><br>큰 판은 <strong>두 손가락으로 벌리면 확대</strong>, 모으면 축소, 두 손가락으로 끌면 화면이 움직여요. 판 아래 <strong>＋ − ⤢</strong> 단추로도 되고, <strong>✋</strong>를 켜면 한 손가락으로 화면을 옮길 수 있어요(PC는 마우스 휠). 판의 <strong>어느 모서리든 화면 가운데까지</strong> 끌어올 수 있어요.</li>
 <li><strong>🏆 별</strong><br>힌트·확인을 안 쓰고 풀면 <strong>★3</strong>, 조금만 쓰면 ★2, 많이 쓰면 ★1. 판은 <strong>30개</strong> — 🌲 5×5 → ⛰️ 6×6 → 🌌 7×7 → 🏜️ 8×8 → 🏡 10×10 순서로 커져요. 모은 별은 가족 순위에 올라가요. 너무 어려우면 ⏭ <strong>건너뛰기</strong>도 돼요.</li>
 </ul>
 </div>
@@ -7041,15 +7108,20 @@ if(typeof module !== 'undefined') module.exports = KNCore;
 //  KNCore(코어)가 칸·이동·풀이를, 이 모듈이 화면·조작·진행 저장·기록을 맡는다. 판 30개는 gen_kn.js 가 만들고 풀이기로 다 풀리는지 확인한 것.
 // ════════════════════════════════════════════════════════════════════
 const Knight=(function(){
-  const K = KNCore, W = 360, H = 560;
+  const K = KNCore, W = 360, H = 438;
   const LEVELS = [{"n":5,"rows":["####.","#.S##","###.#",".#.##","##.#."],"sol":[7,4,13,24,17,6,15,22],"free":8},{"n":5,"rows":["#.#.#","#.###",".#.#.",".###.","#S.##"],"sol":[21,10,1,12,19,22,15,6,3,14],"free":10},{"n":5,"rows":[".S##.","##..#","..#.#","##.#.","##.#."],"sol":[1,10,17,24,13,4,7,0,11,8,19,22],"free":12},{"n":5,"rows":["..##.","##..#","..#.#","S##..","#..#."],"sol":[15,22,19,8,1,10,21,18,11,0,7,4,13,24],"free":14},{"n":5,"rows":["##..#","...#.",".#S#.","..#..","#...#"],"sol":[12,5,2,9,18,21,10,7,16,23,14,3,6,15,22,19],"free":16},{"n":5,"rows":["....#","..#S.","...#.","..#..","#...#"],"sol":[8,19,22,15,6,3,14,23,16,5,12,1,10,21,18,9,2,11,0],"free":19},{"n":5,"rows":[".....","...S.",".....",".....","....."],"sol":[8,1,10,21,18,9,2,5,16,23,12,19,22,15,6,3,14,17,20,11,0,7,4,13,24],"free":25},{"n":6,"rows":["#.###.","###S##",".#.#.#",".###.#","#.#.#.","#.#.#."],"sol":[9,5,16,29,33,25,12,1,14,18,31,27,35,22],"free":14},{"n":6,"rows":["#..##.",".##.S#",".###.#","#.##..","##..#.",".##..."],"sol":[10,2,6,19,30,26,34,23,27,35,22,33,29,16,5,9,1,12],"free":18},{"n":6,"rows":[".#.#.#",".#.#.#","#.#S#.","#...#.",".#...#","...#.."],"sol":[15,4,8,0,13,2,6,19,30,26,34,23,10,21,17,28,32,24,20,31,27,35],"free":22},{"n":6,"rows":[".#S..#","...#..","#...##","..#...","....##","...#.."],"sol":[2,6,19,30,26,34,23,10,21,32,24,13,0,8,4,15,11,3,7,18,31,27,35,22,14,25],"free":26},{"n":6,"rows":["#...#.","..#.#.",".#...#","...#..","......",".S...."],"sol":[31,18,7,3,11,22,35,27,23,34,26,30,19,6,14,1,12,25,33,29,16,5,9,20,24,32,28,15,2],"free":29},{"n":6,"rows":["..#...","....#S","...#..",".....#","......","......"],"sol":[11,3,7,18,31,27,35,22,33,29,16,5,9,1,14,25,12,20,24,32,28,17,4,8,0,13,21,34,26,30,19,6],"free":32},{"n":6,"rows":["#.....","..#...","......",".....S","......","......"],"sol":[23,34,26,30,19,6,2,10,21,29,33,25,12,1,14,18,31,27,35,22,11,3,7,15,4,17,28,32,24,20,16,5,9,13],"free":34},{"n":6,"rows":["......","......","......","......",".S....","......"],"sol":[25,33,29,16,5,9,1,12,20,24,32,28,17,4,8,0,13,21,34,23,10,2,6,19,30,26,15,7,18,31,27,35,22,11,3,14],"free":36},{"n":7,"rows":["##...##","..###..","###.###","..###..","#.#.S##","...##..",".#...##"],"sol":[32,45,40,27,12,3,8,21,36,31,44,35,22,7,2,17,4,13,26,41,46,37,42,29],"free":24},{"n":7,"rows":["#...#..","..#...#","...##..",".#.S.#.","..##.#.","#..##.#",".##.#.#"],"sol":[24,11,6,19,34,47,32,27,40,45,36,21,8,3,12,25,20,5,10,1,16,7,2,15,28,37,42,29,14,23],"free":30},{"n":7,"rows":["..S..##","...#...","....###","..#.#.#","....#.#","...#...",".....#."],"sol":[2,7,22,35,44,29,42,37,46,41,26,13,4,17,12,3,8,21,36,45,40,31,16,1,14,9,0,15,28,43,30,39,48,33,24,11],"free":36},{"n":7,"rows":[".....S.",".....#.","...#...","....#.#","..#.#..",".....#.","#..#..."],"sol":[5,20,33,48,39,44,35,22,7,2,11,6,19,34,47,38,43,28,15,0,9,4,13,26,41,46,37,24,29,14,1,10,23,8,3,18,31,36,21,16],"free":40},{"n":7,"rows":["#......","..#.S..",".......","...#...","..#....",".......","......."],"sol":[11,6,19,4,13,26,41,46,33,48,39,34,47,38,43,28,37,42,29,44,35,22,7,2,17,8,3,12,27,32,45,40,31,36,21,16,1,14,23,18,5,20,25,10,15],"free":45},{"n":7,"rows":[".......",".......",".......",".......",".......",".......","..S...."],"sol":[44,35,22,7,2,11,6,19,4,13,26,41,46,37,42,29,14,1,16,21,8,17,12,3,18,27,40,31,36,45,32,47,34,39,48,33,24,9,0,15,30,43,28,23,38,25,20,5,10],"free":49},{"n":7,"rows":[".......",".......","...S...",".......",".......",".......","......#"],"sol":[17,12,3,8,21,36,45,40,27,32,41,46,37,42,29,14,1,16,7,2,11,6,19,4,13,26,31,44,35,22,9,0,15,28,43,30,39,24,33,20,5,18,23,10,25,38,47,34],"free":48},{"n":8,"rows":["##.###.#",".###..##","###.###.","S.###..#","##...#..","...##...","......#.","....#..."],"sol":[24,41,56,50,40,57,51,34,49,59,53,63,46,61,55,38,23,6,12,2,8,25,35,29,39,45,62,47,30,13,19,36,42,52,58,48],"free":36},{"n":8,"rows":["......#.","....#...",".....#.#","...###S.","#.#...#.","#.#.##..",".#.#...#",".#.#.#.."],"sol":[30,15,5,11,1,16,33,48,58,52,62,47,37,54,39,22,7,13,3,20,14,31,46,63,53,43,60,50,56,41,24,9,26,36,19,4,10,0,17,2,8,25,35,18],"free":44},{"n":8,"rows":["...#...#",".#...#..","..###.#.","#.#.#..S","..#..#..","...#....","........","........"],"sol":[31,14,4,10,0,17,2,8,25,40,57,51,61,55,38,23,6,12,27,21,15,5,11,1,16,33,48,58,41,56,50,60,54,44,59,49,32,42,52,62,47,53,63,46,36,30,45,39,29,35],"free":50},{"n":8,"rows":["........","........","....#..S","......#.","...#.#..",".....#.#","....#...","......#."],"sol":[23,6,12,2,8,25,40,57,51,61,55,38,53,63,46,31,14,4,21,15,5,22,7,13,3,9,19,29,39,54,60,50,56,41,24,34,44,59,49,32,17,0,10,16,1,11,28,18,33,48,58,43,26,36,42,27],"free":56},{"n":8,"rows":["........","........","....#...","..#.....",".....#..","..S#....","........","........"],"sol":[42,57,40,25,8,2,12,6,23,38,55,61,51,41,56,50,60,54,39,22,7,13,3,9,24,18,1,16,33,48,58,52,62,47,30,15,5,11,28,45,35,29,46,63,53,59,44,34,49,32,17,0,10,27,21,36,19,4,14,31],"free":60},{"n":8,"rows":["....S...",".#......","........","#.......","........","........","........","........"],"sol":[4,14,31,46,63,53,59,49,32,17,0,10,16,1,11,5,15,30,47,62,52,58,48,42,57,40,25,8,2,12,6,23,13,7,22,39,29,19,36,21,38,55,61,51,34,28,45,60,54,44,27,37,43,33,50,56,41,26,20,35,18,3],"free":62},{"n":8,"rows":["........","........","...S....","........","........","........","........","........"],"sol":[19,2,8,25,40,57,51,61,55,38,23,6,12,29,39,54,60,50,56,41,24,9,3,13,7,22,5,15,30,47,62,45,35,18,1,16,33,48,58,52,46,63,53,36,42,59,44,34,28,43,49,32,26,11,17,0,10,4,21,27,37,20,14,31],"free":64},{"n":8,"rows":["........","........","........",".....S..","........","........","........","........"],"sol":[29,14,4,10,0,17,2,8,25,40,57,51,61,55,38,23,6,12,27,21,31,46,63,53,47,62,52,58,48,42,59,49,32,26,36,19,9,24,41,56,50,44,34,28,11,1,16,33,18,3,13,7,22,39,54,37,43,60,45,35,20,30,15,5],"free":64}];
   const N = LEVELS.length, MAXST = 3, TSTART = [0, 7, 15, 22];
   const THEMES = [{ id:'forest', name:'숲속', ico:'🌲', n:5 }, { id:'snow', name:'설산', ico:'⛰️', n:6 }, { id:'space', name:'우주', ico:'🌌', n:7 }, { id:'desert', name:'노을 사막', ico:'🏜️', n:8 }];
   const themeOf = i=>{ let t = 0; for(let k = 0; k < TSTART.length; k++) if(i >= TSTART[k]) t = k; return THEMES[t]; };
   const TILE = { forest:['#f6e7bf', '#cfa96e', '#7d5a2c'], snow:['#f6fcff', '#aed2ea', '#4a7ca6'], space:['#d2d8f2', '#8f98c6', '#3d4577'], desert:['#f9e0ae', '#dba862', '#8a5a22'] };
   const ROCK = { forest:['#6fbf6a', '#3f8f48', '#245a2c'], snow:['#e4f3fb', '#9cc3dc', '#58819e'], space:['#8a8fa8', '#5a6080', '#2c3150'], desert:['#e0a35c', '#b97b35', '#7a4c1a'] };
-  const PROG_KEY = 'daeguk:knight:prog', SUB = 'stars';
+  const PROG_KEY = 'daeguk:knight:prog', SUB = 'stars', RND_KEY = 'daeguk:knight:rnd', SAVE_KEY = 'daeguk:knight:save', HOW_KEY = 'daeguk:knight:how';
+  const SIZES = [5, 6, 7, 8], SNAME = { 5:'입문', 6:'중급', 7:'도전', 8:'고수' }, SBG = { 5:'forest', 6:'snow', 7:'space', 8:'desert' };
+  const HOW_HTML = '<div class="fn-howb"><svg viewBox="0 0 128 108" width="118" aria-hidden="true"><rect width="128" height="108" rx="12" fill="#f6e7bf"/><g transform="translate(8,6)"><rect x="0" y="0" width="28" height="28" fill="#f6e7bf"/><rect x="28" y="0" width="28" height="28" fill="#cfa96e"/><rect x="56" y="0" width="28" height="28" fill="#f6e7bf"/><rect x="84" y="0" width="28" height="28" fill="#cfa96e"/><rect x="0" y="28" width="28" height="28" fill="#cfa96e"/><rect x="28" y="28" width="28" height="28" fill="#f6e7bf"/><rect x="56" y="28" width="28" height="28" fill="#cfa96e"/><rect x="84" y="28" width="28" height="28" fill="#f6e7bf"/><rect x="0" y="56" width="28" height="28" fill="#f6e7bf"/><rect x="28" y="56" width="28" height="28" fill="#cfa96e"/><rect x="56" y="56" width="28" height="28" fill="#f6e7bf"/><rect x="84" y="56" width="28" height="28" fill="#cfa96e"/><path d="M14 14H70V42" fill="none" stroke="#6a3fa0" stroke-width="3" stroke-dasharray="5 4" stroke-linecap="round"/><circle cx="70" cy="42" r="8" fill="#ffd84a" stroke="#a87a00" stroke-width="2"/><text x="14" y="23" text-anchor="middle" font-size="24" font-family="sans-serif">♞</text></g><text x="64" y="100" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#4a3a1c">L자 = 2칸 가고 1칸 옆으로</text></svg><ul><li><b>🎯 목표</b> 막힌 칸(돌·나무)을 뺀 <b>모든 칸을 딱 한 번씩</b> 밟아요.</li><li><b>♞ 이동</b> 나이트는 한쪽으로 <b>2칸 + 옆으로 1칸</b>(L자)만 뛰어요.</li><li><b>✋ 조작</b> 내 캐릭터를 <b>꾹 잡고 끌어서</b> 반짝이는 노란 칸에 놓아요. 칸을 톡 눌러도 돼요.</li><li><b>😵 막히면</b> 갈 곳이 없는데 칸이 남으면 ↩ 되돌리기로 다른 길을 찾아요.</li><li><b>🆘 도움</b> 💡 힌트는 다음 칸, 🔢 길잡이는 <b>작은 숫자 칸부터</b> 가면 덜 막혀요.</li><li><b>🏆 별</b> 도움을 안 쓰면 ★3. 랜덤 문제는 시간 기록이 남아요.</li></ul></div>';
+
   const PEOPLE = ['appa', 'eomma', 'hayoon', 'hajun', 'guest'], SCALE = [523, 587, 659, 784, 880, 1047, 1175];
+  let hit = null, hitKey = '';
+  let mode = 'level', msize = 5, mseed = '', tmr = 0, started = false, howOpen = false, saveT = 0, moreEl = null, guideBtn = null, sel = null;
   let ui = null, loop = null, phase = 'select', gen = 0, cur = 0, S = null, tm = 0, shake = 0, pausedFrom = null;
   let drag = null, uses = 0, guide = false, hintCell = -1, hintT = 0, show = 0, kp = null, parts = [], drops = [], floats = [], dust = [], fails = {}, replayT = 0, undoBtn = null, skipBtn = null, geo = null;
 
@@ -7063,6 +7135,47 @@ const Knight=(function(){
   const starHtml = n=>n >= MAXST ? '<span class="b2b-star5">★</span>' : starTxt(n);
   function progSkip(){ try{ const o = progAll(); const a = Array.isArray(o[arcWho]) ? o[arcWho] : []; while(a.length < N) a.push(0); if((a[cur] | 0) === 0) a[cur] = -1; o[arcWho] = a; localStorage.setItem(PROG_KEY, JSON.stringify(o)); }catch(e){} }
 
+  /* ── 랜덤 문제 기록: 가족별 크기마다 완료 횟수 · 최단 시간(도움 없이) ── */
+  function rndAll(){ try{ return JSON.parse(localStorage.getItem(RND_KEY) || '{}') || {}; }catch(e){ return {}; } }
+  function rndOf(who){ const o = rndAll()[who] || {}; return { cnt:o.cnt || {}, best:o.best || {} }; }
+  function rndSave(who, fn){ try{ const all = rndAll(), o = all[who] || {}; o.cnt = o.cnt || {}; o.best = o.best || {}; fn(o); all[who] = o; localStorage.setItem(RND_KEY, JSON.stringify(all)); }catch(e){} }
+  const fmt = sec=>{ sec = Math.max(0, Math.floor(sec)); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
+
+  const ago = t=>{ const m = Math.max(0, Math.floor((Date.now() - (t || 0)) / 60000)); return m < 1 ? '방금' : m < 60 ? m + '분 전' : m < 1440 ? Math.floor(m / 60) + '시간 전' : Math.floor(m / 1440) + '일 전'; };
+  const buzz = ms=>{ try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){} };
+  /* ── 중간 저장 · 이어하기 (가족별 1판) ── */
+  function saveAll(){ try{ return JSON.parse(localStorage.getItem(SAVE_KEY) || '{}') || {}; }catch(e){ return {}; } }
+  function saveOf(who){ const o = saveAll()[who]; return o && Array.isArray(o.path) && o.path.length > 1 ? o : null; }
+  function saveGame(){
+    try{
+      if(!S || (phase !== 'play' && phase !== 'stuck') || S.path.length < 2) return;
+      const o = saveAll(); o[arcWho] = { mode, cur, n:msize, seed:mseed, path:S.path.slice(), u:uses, g:guide ? 1 : 0, tmr:Math.floor(tmr), t:Date.now() };
+      localStorage.setItem(SAVE_KEY, JSON.stringify(o));
+    }catch(e){}
+  }
+  function clearSave(who){ try{ const o = saveAll(), w = who || arcWho; if(o[w]){ delete o[w]; localStorage.setItem(SAVE_KEY, JSON.stringify(o)); } }catch(e){} }
+  function resumeGame(){ const sv = saveOf(arcWho); if(!sv) return; if(sv.mode === 'level' && sv.cur >= 0 && sv.cur < N) play(sv.cur, sv); else if(sv.mode === 'random') startRandom(sv.n, sv.seed, sv); else clearSave(); }
+
+  /* ── 랜덤 문제 만들기: 시드로 같은 판이 다시 나온다. 나이트 길을 하나 걸어 보고(Warnsdorff + 약간의 무작위) 지나지 않은 칸을 막는다 → 항상 풀림 ── */
+  function rng(seed){ let h = 1779033703 ^ seed.length; for(let i = 0; i < seed.length; i++){ h = Math.imul(h ^ seed.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; } let a = h >>> 0; return ()=>{ a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function genRandom(n, seed){
+    const R = rng(seed), NB = K.nbrs(n), tot = n * n;
+    for(let att = 0; att < 500; att++){
+      const target = Math.round(tot * (n === 5 ? .6 + R() * .4 : .78 + R() * .22)), minLen = Math.max(8, Math.floor(target * .92));
+      const start = Math.floor(R() * tot), vis = new Uint8Array(tot), path = [start]; vis[start] = 1;
+      while(path.length < target){
+        const c0 = path[path.length - 1], c = [];
+        NB[c0].forEach(k=>{ if(!vis[k]){ let d = 0; NB[k].forEach(x=>{ if(!vis[x]) d++; }); c.push([d + R() * .9, k]); } });
+        if(!c.length) break; c.sort((a, b)=>a[0] - b[0]); const pk = c.length > 1 && R() < .12 ? c[1][1] : c[0][1]; vis[pk] = 1; path.push(pk);
+      }
+      if(path.length >= minLen){
+        const rows = []; for(let r = 0; r < n; r++){ let row = ''; for(let q = 0; q < n; q++){ const k = r * n + q; row += k === start ? 'S' : vis[k] ? '.' : '#'; } rows.push(row); }
+        return { n, rows, sol:path, free:path.length };
+      }
+    }
+    const f = LEVELS.filter(L=>L.n === n); return f[0] || LEVELS[0];
+  }
+
   /* ── 얼굴 ── */
   const gimg = {};
   function faceImage(k){
@@ -7074,41 +7187,43 @@ const Knight=(function(){
   function build(){
     if(ui) return;
     ui = arcShell($('arcKnight'), { id:'knight', name:'기사의 여정', en:"Knight's Journey", stat:'별', pad:'knight', hud:true, tip:'' });
-    const mk = (lab, cls, fn)=>{ const b = arcEl('button', 'arc-bigbtn tw ' + cls, lab); b.type = 'button'; b.addEventListener('click', fn); return b; };
-    undoBtn = mk('↩ 되돌리기', 'd mv', doUndo);
-    ui.pad.appendChild(undoBtn); ui.pad.appendChild(mk('💡 힌트', 'd mv', doHint)); ui.pad.appendChild(mk('🔢 길잡이', 'd mv', toggleGuide));
-    const br = document.createElement('span'); br.className = 'row2'; ui.pad.appendChild(br);
-    ui.pad.appendChild(mk('🔢 판 선택', 'd sm', ()=>{ if(phase !== 'select') showSelect(); }));
-    ui.pad.appendChild(mk('↺ 다시', 'd sm', ()=>{ if(phase !== 'select') play(cur); }));
-    skipBtn = mk('⏭ 건너뛰기', 'g sm', ()=>{ if(canSkip()){ progSkip(); play(Math.min(N - 1, cur + 1)); } }); skipBtn.style.display = 'none'; ui.pad.appendChild(skipBtn);
-    ui.cv.style.touchAction = 'none';
+    const mk = (lab, fn, cls)=>{ const b = arcEl('button', 'fn-btn' + (cls ? ' ' + cls : ''), lab); b.type = 'button'; b.addEventListener('click', fn); return b; };
+    undoBtn = mk('↩ 되돌리기', doUndo); ui.pad.appendChild(undoBtn); ui.pad.appendChild(mk('💡 힌트', doHint)); guideBtn = mk('🔢 길잡이', toggleGuide); ui.pad.appendChild(guideBtn);
+    const mb = mk('⋯', ()=>moreEl.classList.toggle('on'), 'fn-mb'); mb.setAttribute('aria-label', '더보기'); ui.pad.appendChild(mb);
+    moreEl = arcEl('div', 'fn-more');
+    const mi = (lab, fn)=>{ const b = arcEl('button', 'fn-mi', lab); b.type = 'button'; b.addEventListener('click', ()=>{ moreEl.classList.remove('on'); fn(); }); moreEl.appendChild(b); return b; };
+    mi('🔢 판 선택', ()=>{ if(phase !== 'select') showSelect(); }); mi('↺ 다시', askRestart); mi('❓ 게임 방법', showHow);
+    skipBtn = mi('⏭ 건너뛰기', ()=>{ if(canSkip()){ progSkip(); play(Math.min(N - 1, cur + 1)); } }); skipBtn.style.display = 'none';
+    ui.pad.appendChild(moreEl);
+    sel = arcEl('div', 'fn-selpg'); ui.root.insertBefore(sel, ui.root.querySelector('.arc-screen'));
+    document.addEventListener('visibilitychange', ()=>{ if(document.hidden) saveGame(); }); window.addEventListener('pagehide', saveGame);
+    ui.cv.style.touchAction = 'pan-y'; hit = arcEl('div', 'fn-hit'); ui.cv.parentNode.insertBefore(hit, ui.cv.nextSibling);   // 판 밖은 화면 스크롤, 판 위(hit)만 터치를 가져감
     const pos = e=>{ const r = ui.cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * W, (e.clientY - r.top) / r.height * H]; };
-    ui.cv.addEventListener('pointerdown', e=>{
+    const onDown = e=>{
       e.preventDefault();
       if(phase === 'pause'){ resume(); return; }
       if(phase !== 'play' || !geo || drag) return;
       const p = pos(e), kc = kp ? [kp.x, kp.y] : cellCenter(S.pos), cs = geo.cs;
       if(Math.hypot(p[0] - kc[0], p[1] - (kc[1] - cs * .2)) < Math.max(cs * .85, 34)){       // 말(캐릭터)을 잡음
-        drag = { id:e.pointerId, x:p[0], y:p[1], to:-1 }; try{ ui.cv.setPointerCapture(e.pointerId); }catch(er){} dragAim(); tone(620, .04, .05); return;
+        drag = { id:e.pointerId, x:p[0], y:p[1], to:-1 }; try{ e.currentTarget.setPointerCapture(e.pointerId); }catch(er){} dragAim(); tone(620, .04, .05); return;
       }
       const cc = Math.floor((p[0] - geo.bx) / cs), rr = Math.floor((p[1] - geo.by) / cs);   // 빈 칸을 톡 눌러도 이동(보조)
       if(cc < 0 || rr < 0 || cc >= S.n || rr >= S.n) return;
       tapCell(rr * S.n + cc);
-    });
-    ui.cv.addEventListener('pointermove', e=>{ if(!drag || drag.id !== e.pointerId) return; const p = pos(e); drag.x = p[0]; drag.y = p[1]; dragAim(); });
+    };
+    const onMove = e=>{ if(!drag || drag.id !== e.pointerId) return; const p = pos(e); drag.x = p[0]; drag.y = p[1]; dragAim(); };
     const dragEnd = e=>{
       if(!drag || drag.id !== e.pointerId) return; const d = drag; drag = null;
       if(phase !== 'play' || !S) return;
       if(e.type === 'pointerup' && d.to >= 0) tapCell(d.to, [d.x, d.y + geo.cs * .2]);
       else { hop(S.pos, [d.x, d.y + geo.cs * .2]); if(d.to < 0 && Math.hypot(d.x - cellCenter(S.pos)[0], d.y - cellCenter(S.pos)[1]) > geo.cs * 1.2) tone(220, .06, .06); }
     };
-    ui.cv.addEventListener('pointerup', dragEnd); ui.cv.addEventListener('pointercancel', dragEnd);
-    document.addEventListener('visibilitychange', ()=>{ });
-    window.addEventListener('resize', ()=>{ if(ui && S && !loop) draw(); });
+    [ui.cv, hit].forEach(el=>{ el.addEventListener('pointerdown', onDown); el.addEventListener('pointermove', onMove); el.addEventListener('pointerup', dragEnd); el.addEventListener('pointercancel', dragEnd); });
+        window.addEventListener('resize', ()=>{ if(ui && S && !loop && phase !== 'select') draw(); });
     updateTip();
   }
   function updateTip(){
-    if(ui) ui.tip.innerHTML = '♞ 나이트는 <b>L자</b>로 뛰어요(한쪽으로 2칸 + 옆으로 1칸). <b>내 캐릭터를 꾹 잡고 끌어서</b> 반짝이는 칸에 놓으면 뛰어가요(칸을 톡 눌러도 돼요). 막힌 칸(돌·나무)을 뺀 <b>모든 칸을 한 번씩만</b> 밟으면 성공! 막히면 ↩ 되돌리기 · 💡 힌트 · 🔢 길잡이(<b>작은 숫자 칸부터</b> 가면 덜 막혀요)를 써요. 도움을 안 쓸수록 별이 많아요 (키보드: Z 되돌리기 · H 힌트)';
+    if(ui) ui.tip.innerHTML = '♞ 나이트는 <b>L자</b>로 뛰어요(한쪽으로 2칸 + 옆으로 1칸). <b>내 캐릭터를 꾹 잡고 끌어서</b> 반짝이는 칸에 놓으면 뛰어가요(칸을 톡 눌러도 돼요). 막힌 칸(돌·나무)을 뺀 <b>모든 칸을 한 번씩만</b> 밟으면 성공! 막히면 ↩ 되돌리기 · 💡 힌트 · 🔢 길잡이(<b>작은 숫자 칸부터</b> 가면 덜 막혀요)를 써요. 도움을 안 쓸수록 별이 많아요 (키보드: Z 되돌리기 · H 힌트). <b>중간에 나가도 저장</b>돼서 이어서 할 수 있어요';
   }
 
   /* ── 흐름 ── */
@@ -7117,8 +7232,13 @@ const Knight=(function(){
     if(loop){ loop.stop(); loop = null; } gen++;
     showSelect(); paintSide();
   }
-  function showSelect(){
-    if(loop){ loop.stop(); loop = null; } gen++; phase = 'select'; arcPlaying(ui, false);
+  function sizeBtns(){
+    const r = rndOf(arcWho); let h = '<div class="fn-sizes c4">';
+    SIZES.forEach(n=>{ const b = r.best[n], c = r.cnt[n] | 0, mark = b != null ? '🏅 ' + fmt(b) : c ? '✔ ' + c + '회' : ''; h += '<button type="button" data-n="' + n + '"><b>' + n + '×' + n + '</b><small>' + SNAME[n] + '</small>' + (mark ? '<i>' + mark + '</i>' : '') + '</button>'; });
+    return h + '</div>';
+  }
+  function showSelect(openLv){
+    saveGame(); howOpen = false; if(loop){ loop.stop(); loop = null; } gen++; phase = 'select'; arcPlaying(ui, false);
     const pr = progOf(arcWho); let g = '';
     for(let t = 0; t < THEMES.length; t++){
       const th = THEMES[t]; if(TSTART[t] >= N) break; g += '<div class="b2b-th">' + th.ico + ' ' + th.name + ' · ' + th.n + '×' + th.n + '</div><div class="b2b-levels">';
@@ -7128,20 +7248,47 @@ const Knight=(function(){
       }
       g += '</div>';
     }
-    if(!S) S = K.create(LEVELS[cur]);
-    arcOverlay(ui, '<h3>♞ 기사의 여정</h3><p class="arc-sub">나이트가 <b>모든 칸을 한 번씩만</b> 밟고 지나가요<br>L자로 뛰는 길을 잘 짜 봐요 · ⭐ 모은 별 <b>' + total(arcWho) + '</b> / ' + N * MAXST + '</p>' + g);
-    ui.over.querySelectorAll('.b2b-levels button').forEach(b=>b.addEventListener('click', ev=>{ ev.stopPropagation(); play(+b.dataset.i); }));
-    paintSide(); draw();
+    if(!S) S = K.create(LEVELS[0]);
+    const sv = saveOf(arcWho); let rs = '';
+    if(sv){ const lab = sv.mode === 'level' ? '🪜 단계 ' + (sv.cur + 1) + '번 판' : '🎲 랜덤 ' + sv.n + '×' + sv.n; rs = '<button type="button" class="fn-resume"><span class="rl">▶ 이어하기</span><span class="rm">' + lab + (sv.mode !== 'level' ? ' · ⏱ ' + fmt(sv.tmr) : ' · ' + sv.path.length + '칸 밟음') + ' · ' + ago(sv.t) + '</span></button>'; }
+    ui.root.classList.add('fn-selmode');
+    sel.innerHTML = '<div class="fn-hero"><h3>♞ 기사의 여정</h3><p>나이트가 <b>모든 칸을 한 번씩만</b> 밟고 지나가요</p></div>' + rs +
+      '<div class="fn-sec"><b>🎲 판 크기 선택</b><small>누를 때마다 새 문제</small></div>' + sizeBtns() +
+      '<div class="fn-sec"><b>🪜 단계 도전 30판</b><small>⭐ ' + total(arcWho) + ' / ' + N * MAXST + '</small></div><div class="fn-lv">' + g + '</div>';
+    const rb = sel.querySelector('.fn-resume'); if(rb) rb.addEventListener('click', ev=>{ ev.stopPropagation(); resumeGame(); });
+    sel.querySelectorAll('.b2b-levels button').forEach(b=>b.addEventListener('click', ev=>{ ev.stopPropagation(); play(+b.dataset.i); }));
+    sel.querySelectorAll('.fn-sizes button').forEach(b=>b.addEventListener('click', ev=>{ ev.stopPropagation(); startRandom(+b.dataset.n); }));
+    arcOverlay(ui, null); paintSide();
+    if(openLv){ const lv = sel.querySelector('.fn-lv'); if(lv) setTimeout(()=>{ try{ lv.scrollIntoView({ block:'start' }); }catch(e){} }, 30); }
   }
-  function play(i){
-    cur = i; S = K.create(LEVELS[cur]); uses = 0; guide = false; hintCell = -1; hintT = 0; show = S.path.length; parts = []; drops = []; floats = []; dust = []; replayT = 0;
-    kp = null; const c = cellCenter(S.pos); kp = { x:c[0], y:c[1], fx:c[0], fy:c[1], tx:c[0], ty:c[1], t:1, dur:.2 };
-    phase = 'play'; arcOverlay(ui, null); arcSfx('start'); updateTip(); paintSide(); arcScrollIn(ui);
-    FamFx.hintOnce(ui, 'knight', '♞ L자로 뛰어요! 캐릭터를 끌어서 반짝이는 칸에 놓고, 모든 칸을 한 번씩만 밟아요', 5200);
+  function leaveSelect(){ howOpen = false; ui.root.classList.remove('fn-selmode'); }
+  function begin(L, sv){
+    S = K.create(L); uses = 0; guide = false; hintCell = -1; hintT = 0; parts = []; drops = []; floats = []; dust = []; replayT = 0; tmr = 0; started = false; howOpen = false; saveT = 0;
+    if(sv && Array.isArray(sv.path)){ for(let i = 1; i < sv.path.length; i++){ if(!K.move(S, sv.path[i])) break; } uses = sv.u | 0; tmr = +sv.tmr || 0; guide = !!sv.g; started = S.path.length > 1; }
+    show = S.path.length; const c = cellCenter(S.pos); kp = { x:c[0], y:c[1], fx:c[0], fy:c[1], tx:c[0], ty:c[1], t:1, dur:.2 };
+    phase = K.stuck(S) ? 'stuck' : 'play'; leaveSelect(); arcOverlay(ui, null);
+    if(undoBtn) undoBtn.classList.toggle('pulse', phase === 'stuck'); if(guideBtn) guideBtn.classList.toggle('on', guide);
+    arcSfx('start'); updateTip(); paintSide(); arcScrollIn(ui);
+    if(!sv) FamFx.hintOnce(ui, 'knight', '♞ 캐릭터를 끌어 반짝이는 칸에 놓아요!', 5200);
     const my = ++gen; loop = arcLoop(dt=>{ if(my !== gen) return; step(dt); draw(); });
   }
+  function play(i, sv){ mode = 'level'; cur = i; begin(LEVELS[cur], sv); }
+  function startRandom(n, seedOverride, sv){
+    const seed = seedOverride || 'k' + Date.now() + ':' + Math.floor(Math.random() * 1e9) + ':' + n;
+    mode = 'random'; msize = n; mseed = seed; cur = -1; begin(genRandom(n, seed), sv);
+  }
+  function showHow(){
+    if(!ui || (phase !== 'play' && phase !== 'stuck')) return;
+    howOpen = true; arcOverlay(ui, '<h3>❓ 게임 방법</h3>' + HOW_HTML, [{ label:'알겠어요', fn:()=>{ howOpen = false; arcOverlay(ui, null); } }]);
+  }
+  function restartNow(){ howOpen = false; clearSave(); if(mode === 'level') play(cur); else begin(S.L); }
+  function askRestart(){
+    if(!ui || !S || phase === 'select') return;
+    if(S.path.length < 2 || phase === 'win'){ restartNow(); return; }
+    howOpen = true; arcOverlay(ui, '<h3>↺ 처음부터 다시?</h3><p class="arc-sub">지금까지 간 길이 모두 지워져요</p>', [{ label:'다시 하기', fn:restartNow }, { label:'계속하기', cls:'ghost', fn:()=>{ howOpen = false; arcOverlay(ui, null); } }]);
+  }
   function pause(){
-    if(phase !== 'play' && phase !== 'stuck') return;
+    if(phase !== 'play' && phase !== 'stuck') return; saveGame();
     if(loop){ loop.stop(); loop = null; } pausedFrom = phase; phase = 'pause';
     arcOverlay(ui, '<h3>⏸ 잠깐 멈춤</h3>', [{ label:'▶ 계속하기', fn:resume }]); draw();
   }
@@ -7150,7 +7297,7 @@ const Knight=(function(){
     phase = pausedFrom || 'play'; arcOverlay(ui, null);
     const my = ++gen; loop = arcLoop(dt=>{ if(my !== gen) return; step(dt); draw(); });
   }
-  function halt(){ if(loop){ loop.stop(); loop = null; } gen++; if(phase !== 'select') phase = 'select'; }
+  function halt(){ saveGame(); howOpen = false; if(loop){ loop.stop(); loop = null; } gen++; if(phase !== 'select') phase = 'select'; if(ui && sel) leaveSelect(); }
   function key(e, down){
     if(!down || e.repeat) return false;
     if(phase === 'pause' && (e.code === 'Space' || e.code === 'Enter')){ e.preventDefault(); resume(); return true; }
@@ -7159,12 +7306,18 @@ const Knight=(function(){
     return false;
   }
   const allow = ()=>Math.max(2, Math.round(S.free / 12));
-  function canSkip(){ return S && (phase === 'play' || phase === 'stuck') && uses >= 8 && (progOf(arcWho)[cur] | 0) === 0 && cur < N - 1; }
+  function canSkip(){ return S && mode === 'level' && (phase === 'play' || phase === 'stuck') && uses >= 8 && (progOf(arcWho)[cur] | 0) === 0 && cur < N - 1; }
 
   /* ── 조작 ── */
   function cellCenter(k){ const g = layout(); return [g.bx + (k % S.n + .5) * g.cs, g.by + (Math.floor(k / S.n) + .5) * g.cs]; }
+  function syncHit(){
+    if(!hit || !S || !geo) return;
+    const x0 = Math.max(0, geo.bx - 4), y0 = Math.max(0, geo.by - geo.cs * .9), x1 = Math.min(W, geo.bx + geo.bs + 4), y1 = Math.min(H, geo.by + geo.bs + 4), k = [x0, y0, x1, y1].map(v=>Math.round(v)).join(',');
+    if(k === hitKey) return; hitKey = k;
+    hit.style.left = (x0 / W * 100) + '%'; hit.style.top = (y0 / H * 100) + '%'; hit.style.width = ((x1 - x0) / W * 100) + '%'; hit.style.height = ((y1 - y0) / H * 100) + '%';
+  }
   function layout(){
-    const n = S.n, bs = 336, cs = bs / n; geo = { cs, bs, bx:(W - bs) / 2, by:108 + (336 - bs) / 2 }; return geo;
+    const n = S.n, bs = 348, cs = bs / n; geo = { cs, bs, bx:(W - bs) / 2, by:42 }; return geo;
   }
   function hop(k, from){
     const c = cellCenter(k), fx = from ? from[0] : kp ? kp.x : c[0], fy = from ? from[1] : kp ? kp.y : c[1], face = Math.abs(c[0] - fx) > 3 ? (c[0] < fx ? -1 : 1) : (kp && kp.face) || 1;
@@ -7179,20 +7332,20 @@ const Knight=(function(){
   function tapCell(k, from){
     if(phase !== 'play') return;
     if(!K.move(S, k)){ if(k !== S.pos){ tone(200, .05, .06); const c = cellCenter(k); floats.push({ x:c[0], y:c[1], txt:'✖', c:'#ff8d8d', t:0 }); } return; }
-    hintCell = -1; show = S.path.length; hop(k, from);
+    hintCell = -1; show = S.path.length; started = true; hop(k, from);
     const step = S.path.length, f = SCALE[step % 7] * (1 + Math.floor(step / 7) % 3 * .5); tone(f, .09, .1);
-    const c = cellCenter(k); FamFx.dust(dust, c[0], c[1] + geo.cs * .3, 4, 'rgba(255,255,255,.8)');
+    const c = cellCenter(k); buzz(8); FamFx.dust(dust, c[0], c[1] + geo.cs * .3, 4, 'rgba(255,255,255,.8)');
     if(step % 10 === 0) floats.push({ x:c[0], y:c[1] - 10, txt:step + '칸!', c:'#ffe36b', t:0, big:1 });
     paintHud();
-    if(K.done(S)) onWin(); else if(K.stuck(S)){ phase = 'stuck'; arcSfx('hit'); shake = .35; if(undoBtn) undoBtn.classList.add('pulse'); }
-    syncSkip();
+    if(K.done(S)) onWin(); else if(K.stuck(S)){ phase = 'stuck'; buzz([40, 50, 40]); arcSfx('hit'); shake = .35; if(undoBtn) undoBtn.classList.add('pulse'); }
+    syncSkip(); saveGame();
   }
   function doUndo(){
     if(!S || (phase !== 'play' && phase !== 'stuck')) return;
     if(!K.undo(S)){ tone(200, .05, .06); return; }
     uses++; hintCell = -1; show = S.path.length; hop(S.pos); tone(330, .06, .08);
     if(phase === 'stuck'){ phase = 'play'; if(undoBtn) undoBtn.classList.remove('pulse'); }
-    paintHud(); syncSkip();
+    paintHud(); syncSkip(); saveGame();
   }
   function doHint(){
     if(!S || (phase !== 'play' && phase !== 'stuck')) return;
@@ -7201,37 +7354,53 @@ const Knight=(function(){
     if(h.cell != null){ uses++; hintCell = h.cell; hintT = 3; tone(880, .1, .09); }
     else if(h.dead){ uses++; arcToast(ui, '💦 이 길로는 끝까지 못 가요! ↩ 되돌려 봐요', 2200); tone(220, .2, .1); }
     else arcToast(ui, '🤔 이 길은 잘 모르겠어요… ↩ 되돌려 볼까요?', 2200);
-    paintHud(); syncSkip();
+    paintHud(); syncSkip(); saveGame();
   }
   function toggleGuide(){
     if(!S || (phase !== 'play' && phase !== 'stuck')) return;
     if(!guide){ guide = true; uses++; arcToast(ui, '🔢 숫자 = 거기서 갈 수 있는 길 수 · <b>작은 숫자부터</b> 가면 막히기 어려워요', 3000); } else guide = false;
-    paintHud(); syncSkip();
+    if(guideBtn) guideBtn.classList.toggle('on', guide); paintHud(); syncSkip(); saveGame();
   }
   function syncSkip(){ if(skipBtn) skipBtn.style.display = canSkip() ? '' : 'none'; }
 
   /* ── 결과 ── */
   function onWin(){
-    phase = 'win'; if(undoBtn) undoBtn.classList.remove('pulse');
-    const who = arcWho, st = uses === 0 ? 3 : uses <= allow() ? 2 : 1, before = (progOf(who)[cur] | 0);
-    progSave(who, cur, st); fails[cur] = 0;
-    const tot = total(who), prevBest = arcBest('knight', SUB, who);
-    if(prevBest == null || tot > prevBest){ const r = arcRec.knight && arcRec.knight[SUB] && arcRec.knight[SUB][who]; if(r) r.top = []; arcSubmit('knight', SUB, who, tot, false, { stars:tot }); }
-    show = 1; replayT = 0; arcSfx('win'); if(st === 3) setTimeout(()=>arcSfx('best'), 400);
+    phase = 'win'; clearSave(); howOpen = false; if(undoBtn) undoBtn.classList.remove('pulse');
+    const who = arcWho; let st = 0, html, btns = [];
+    show = 1; replayT = 0; arcSfx('win'); buzz([40, 60, 40, 60, 90]);
     for(let i = 0; i < 16; i++) drops.push({ x:30 + Math.random() * 300, y:-20 - Math.random() * 160, vx:(Math.random() - .5) * 60, vy:60 + Math.random() * 120, v:Math.floor(Math.random() * 5), t:0 });
-    const last = cur >= N - 1, my = gen, dur = Math.min(2.4, S.free / 26) * 1000 + 600;
-    const html = '<h3>' + (st === 3 ? '🌟 PERFECT!' : '🎉 여정 성공!') + '</h3><p class="arc-big b2b-st">' + starHtml(st) + '</p><p class="arc-sub">' + (cur + 1) + '번 판 · ' + S.free + '칸 · 도움 <b>' + uses + '번</b> 사용 (★3: 도움 없이 · ★2: ' + allow() + '번 이하)' + (st > before && before > 0 ? '<br>🏆 별 기록이 올랐어요!' : '') + '<br>모은 별 ' + tot + ' / ' + N * MAXST + '</p>';
-    const btns = []; if(!last) btns.push({ label:'▶ 다음 판', fn:()=>play(cur + 1) });
-    btns.push({ label:'↺ 다시', fn:()=>play(cur), cls:last ? 'primary' : 'ghost' }); btns.push({ label:'🔢 판 선택', fn:showSelect, cls:'ghost' });
-    S._res = { st, uses };
+    const my = gen, dur = Math.min(2.4, S.free / 26) * 1000 + 600;
+    if(mode === 'level'){
+      st = uses === 0 ? 3 : uses <= allow() ? 2 : 1; const before = (progOf(who)[cur] | 0);
+      progSave(who, cur, st); fails[cur] = 0;
+      const tot = total(who), prevBest = arcBest('knight', SUB, who);
+      if(prevBest == null || tot > prevBest){ const r = arcRec.knight && arcRec.knight[SUB] && arcRec.knight[SUB][who]; if(r) r.top = []; arcSubmit('knight', SUB, who, tot, false, { stars:tot }); }
+      if(st === 3) setTimeout(()=>arcSfx('best'), 400);
+      const last = cur >= N - 1;
+      html = '<h3>' + (st === 3 ? '🌟 PERFECT!' : '🎉 여정 성공!') + '</h3><p class="arc-big b2b-st">' + starHtml(st) + '</p><p class="arc-sub">' + (cur + 1) + '번 판 · ' + S.free + '칸 · 도움 <b>' + uses + '번</b> 사용 (★3: 도움 없이 · ★2: ' + allow() + '번 이하)' + (st > before && before > 0 ? '<br>🏆 별 기록이 올랐어요!' : '') + '<br>모은 별 ' + tot + ' / ' + N * MAXST + '</p>';
+      if(!last) btns.push({ label:'▶ 다음 판', fn:()=>play(cur + 1) });
+      btns.push({ label:'↺ 다시', fn:()=>play(cur), cls:last ? 'primary' : 'ghost' }); btns.push({ label:'🔢 판 선택', fn:()=>showSelect(true), cls:'ghost' });
+      S._res = { st, uses };
+      if(typeof say === 'function') say(arcName(who) + ' 님 ' + (cur + 1) + '번 판 ' + starTxt(st) + '!');
+    } else {
+      const sec = Math.floor(tmr), n = msize; let isBest = false, prev = null;
+      rndSave(who, o=>{ o.cnt[n] = (o.cnt[n] | 0) + 1; prev = o.best[n]; if(uses === 0 && (prev == null || sec < prev)){ o.best[n] = sec; isBest = true; } });
+      if(uses === 0){ try{ arcSubmit('knight', 't' + n, who, sec, true, { sec, n }); }catch(e){} }
+      if(isBest) setTimeout(()=>arcSfx('best'), 400); else if(uses === 0) setTimeout(()=>arcSfx('best'), 400);
+      html = '<h3>' + (uses === 0 ? '🌟 ' : '🎉 ') + '여정 성공!</h3><p class="arc-big b2b-st">⏱ ' + fmt(sec) + '</p><p class="arc-sub">🎲 랜덤 ' + n + '×' + n + ' ' + SNAME[n] + ' · ' + S.free + '칸<br>도움 <b>' + uses + '번</b> 사용' + (uses ? ' (도움을 쓰면 최고 기록엔 안 들어가요)' : (isBest ? '<br>🏅 <b>새 최고 기록!</b>' + (prev != null ? ' (이전 ' + fmt(prev) + ')' : '') : (prev != null ? '<br>내 최고 ' + fmt(prev) : ''))) + '</p>';
+      btns.push({ label:'▶ 새 문제', fn:()=>startRandom(n) }); btns.push({ label:'↺ 다시', fn:()=>begin(S.L), cls:'ghost' }); btns.push({ label:'🔢 크기 선택', fn:()=>showSelect(), cls:'ghost' });
+      S._res = { sec, uses, best:isBest };
+      if(typeof say === 'function') say(arcName(who) + ' 님 ' + n + '×' + n + ' ' + fmt(sec) + ' 완성!');
+    }
     setTimeout(()=>{ if(my !== gen || phase !== 'win') return; arcOverlay(ui, html, btns, true); paintSide(); }, dur);
-    if(typeof say === 'function') say(arcName(arcWho) + ' 님 ' + (cur + 1) + '번 판 ' + starTxt(st) + '!');
   }
 
   /* ── 화면 값 ── */
   function paintHud(){
     if(!ui || !ui.hud || !S) return;
-    const html = '<span><small>판</small><b>' + (cur + 1) + ' / ' + N + '</b></span><span><small>밟은 칸</small><b>' + S.path.length + ' / ' + S.free + '</b></span><span><small>도움 쓴 횟수</small><b>' + uses + '</b></span>';
+    const first = mode === 'level' ? '<span><small>판</small><b>' + (cur + 1) + ' / ' + N + '</b></span>' : '<span><small>' + (SNAME[S.n] || '') + '</small><b>🎲 ' + S.n + '×' + S.n + '</b></span>';
+    const third = mode === 'level' ? '<span><small>도움 쓴 횟수</small><b>' + uses + '</b></span>' : '<span><small>걸린 시간' + (uses ? ' · 도움 ' + uses : '') + '</small><b>' + fmt(tmr) + '</b></span>';
+    const html = first + '<span><small>밟은 칸</small><b>' + S.path.length + ' / ' + S.free + '</b></span>' + third;
     if(ui.hud._h !== html){ ui.hud.innerHTML = html; ui.hud._h = html; }
   }
   function paintSide(){
@@ -7246,7 +7415,8 @@ const Knight=(function(){
 
   /* ── 움직임 ── */
   function step(dt){
-    tm += dt; shake = Math.max(0, shake - dt * 2.4); if(hintT > 0){ hintT -= dt; if(hintT <= 0) hintCell = -1; }
+    tm += dt; shake = Math.max(0, shake - dt * 2.4);
+    if((phase === 'play' || phase === 'stuck') && started && !howOpen){ saveT += dt; if(saveT > 5){ saveT = 0; saveGame(); } if(mode !== 'level'){ const a0 = Math.floor(tmr); tmr += dt; if(Math.floor(tmr) !== a0) paintHud(); } } if(hintT > 0){ hintT -= dt; if(hintT <= 0) hintCell = -1; }
     if(kp && kp.t < 1) kp.t = Math.min(1, kp.t + dt / kp.dur);
     FamFx.stepParts(dust, dt);
     floats = floats.filter(f=>(f.t += dt) < 1);
@@ -7258,13 +7428,9 @@ const Knight=(function(){
   /* ── 그리기 ── */
   function draw(){
     if(!ui || !S) return;
-    arcFit(ui, W, H); const c = ui.ctx, th = themeOf(cur), g = layout(), n = S.n, cs = g.cs, col = arcColor(arcWho);
+    arcFit(ui, W, H); syncHit(); const c = ui.ctx, th = mode === 'level' ? themeOf(cur) : { id:SBG[S.n] || 'forest' }, g = layout(), n = S.n, cs = g.cs, col = arcColor(arcWho);
     c.save(); if(shake > 0) c.translate((Math.random() - .5) * 6 * shake, (Math.random() - .5) * 6 * shake);
     if(typeof Ball2Box !== 'undefined' && Ball2Box.fx) Ball2Box.fx.bg(c, th.id, tm); else { c.fillStyle = '#9fd8ff'; c.fillRect(0, 0, W, H); }
-    // 진행 막대
-    const pr = S.path.length / S.free; c.fillStyle = 'rgba(20,24,50,.55)'; arcRR(c, 30, 62, W - 60, 16, 8); c.fill(); c.fillStyle = col; arcRR(c, 30, 62, Math.max(16, (W - 60) * pr), 16, 8); c.fill();
-    FamFx.face(c, arcWho, 30 + Math.max(8, (W - 60) * pr - 8), 70, 11);
-    FamFx.pill(c, '밟은 칸 ' + S.path.length + ' / ' + S.free, W / 2, 98, 'center');
     // 판
     c.fillStyle = 'rgba(0,0,0,.28)'; arcRR(c, g.bx - 2, g.by + 3, g.bs + 4, g.bs + 4, 12); c.fill();
     c.fillStyle = TILE[th.id][2]; arcRR(c, g.bx - 5, g.by - 5, g.bs + 10, g.bs + 10, 14); c.fill();
@@ -7319,7 +7485,7 @@ const Knight=(function(){
     parts.forEach(p=>{ c.globalAlpha = Math.max(0, 1 - p.t / p.life); c.fillStyle = p.c; c.fillRect(p.x, p.y, p.r, p.r); }); c.globalAlpha = 1;
     floats.forEach(f=>{ c.globalAlpha = Math.max(0, 1 - f.t); c.font = '900 ' + (f.big ? 20 : 16) + 'px sans-serif'; c.textAlign = 'center'; c.lineWidth = 4; c.strokeStyle = 'rgba(40,30,70,.88)'; c.strokeText(f.txt, f.x, f.y - f.t * 28); c.fillStyle = f.c; c.fillText(f.txt, f.x, f.y - f.t * 28); }); c.globalAlpha = 1;
     if(phase === 'stuck'){ c.fillStyle = 'rgba(40,20,40,.72)'; arcRR(c, W / 2 - 120, g.by + g.bs + 12, 240, 36, 18); c.fill(); c.fillStyle = '#fff'; c.font = '900 16px sans-serif'; c.textAlign = 'center'; c.fillText('😵 막혔어요! ↩ 되돌리기', W / 2, g.by + g.bs + 36); }
-    if(phase === 'win'){ c.font = '900 22px sans-serif'; c.textAlign = 'center'; c.lineWidth = 5; c.strokeStyle = 'rgba(40,30,70,.88)'; c.strokeText('여정 완성!', W / 2, 52); c.fillStyle = '#ffe36b'; c.fillText('여정 완성!', W / 2, 52); }
+    if(phase === 'win'){ c.font = '900 22px sans-serif'; c.textAlign = 'center'; c.lineWidth = 5; c.strokeStyle = 'rgba(40,30,70,.88)'; c.strokeText('여정 완성!', W / 2, 28); c.fillStyle = '#ffe36b'; c.fillText('여정 완성!', W / 2, 28); }
     c.restore();
   }
   function drawRock(c, x, y, cs, id, k){
@@ -7335,7 +7501,7 @@ const Knight=(function(){
     id:'knight', title:'기사의 <span>여정</span>', stage:'stageKnight', noTally:true, arcade:true,
     reset, paint, halt, pause, key,
     __t:{
-      phase:()=>phase, cur:()=>cur, S:()=>S, n:()=>N, levels:()=>LEVELS, play:i=>play(i), select:()=>showSelect(), draw:()=>draw(), tap:k=>tapCell(k), undo:()=>doUndo(), hint:()=>doHint(), guide:()=>toggleGuide(),
+      phase:()=>phase, cur:()=>cur, S:()=>S, n:()=>N, levels:()=>LEVELS, play:i=>play(i), startRandom:(n, seed)=>startRandom(n, seed), genRandom:(n, seed)=>genRandom(n, seed), mode:()=>mode, msize:()=>msize, save:()=>saveOf(arcWho), saveNow:()=>saveGame(), resume:()=>resumeGame(), how:()=>showHow(), restart:()=>askRestart(), tmr:()=>tmr, rnd:()=>rndOf(arcWho), select:()=>showSelect(), draw:()=>draw(), tap:k=>tapCell(k), undo:()=>doUndo(), hint:()=>doHint(), guide:()=>toggleGuide(),
       step:(dt, n)=>{ for(let i = 0; i < (n || 1); i++) step(dt); }, prog:()=>progOf(arcWho), total:()=>total(arcWho), res:()=>S && S._res, uses:()=>uses, canSkip:()=>canSkip(), cell:k=>cellCenter(k), geo:()=>geo, hintCell:()=>hintCell
     }
   };
@@ -7546,8 +7712,11 @@ const Fence=(function(){
   const SIZES = [5, 7, 10, 12, 15, 20], SNAME = { 5:'입문', 7:'중급', 10:'도전', 12:'고수', 15:'달인', 20:'극한' }, SLV = { 5:0, 7:0, 10:1, 12:1, 15:0, 20:0 };
   const RND_KEY = 'daeguk:fence:rnd', VP = { x:0, y:0, w:360, h:360 }, INK = '#6B5836', NUM = '#4a3a1c';
   const themeOf = i=>{ let t = 0; for(let k = 0; k < TSTART.length; k++) if(i >= TSTART[k]) t = k; return THEMES[t]; };
-  const PROG_KEY = 'daeguk:fence:prog', SUB = 'stars';
+  const PROG_KEY = 'daeguk:fence:prog', SUB = 'stars', SAVE_KEY = 'daeguk:fence:save', HOW_KEY = 'daeguk:fence:how';
+  const HOW_HTML = '<div class="fn-howb"><svg viewBox="0 0 128 118" width="118" aria-hidden="true"><rect width="128" height="118" rx="12" fill="#fcf6e6"/><g transform="translate(14,10)"><path d="M0 0H72V72H0Z" fill="rgba(110,170,90,.22)" stroke="#e0762a" stroke-width="6" stroke-linejoin="round"/><g fill="#6B5836"><circle cx="0" cy="0" r="3"/><circle cx="24" cy="0" r="3"/><circle cx="48" cy="0" r="3"/><circle cx="72" cy="0" r="3"/><circle cx="0" cy="24" r="3"/><circle cx="24" cy="24" r="3"/><circle cx="48" cy="24" r="3"/><circle cx="72" cy="24" r="3"/><circle cx="0" cy="48" r="3"/><circle cx="24" cy="48" r="3"/><circle cx="48" cy="48" r="3"/><circle cx="72" cy="48" r="3"/><circle cx="0" cy="72" r="3"/><circle cx="24" cy="72" r="3"/><circle cx="48" cy="72" r="3"/><circle cx="72" cy="72" r="3"/></g><g font-family="sans-serif" font-weight="900" font-size="15" text-anchor="middle" fill="#1e8a3c"><text x="12" y="17">2</text><text x="36" y="41">0</text><text x="60" y="17">2</text><text x="12" y="65">2</text><text x="60" y="65">2</text></g></g><text x="64" y="106" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#4a3a1c">예시: 선이 하나의 고리</text></svg><ul><li><b>🎯 목표</b> 점과 점 사이에 선을 그어 <b>끊기지 않는 고리 하나</b>를 만들어요.</li><li><b>🔢 숫자</b> 칸 안 숫자 = 그 칸 <b>네 변 중 선이 있는 변의 수</b>예요. 숫자 없는 칸은 자유!</li><li><b>🚫 약속</b> 선은 갈라지거나 겹치면 안 돼요. 한 점엔 선이 <b>0개 또는 2개</b>만 닿아요.</li><li><b>✏️ 조작</b> 톡 → 선 · 또 톡 → ✕ · 또 톡 → 지우기. 끌면 쭉 그려져요.</li><li><b>🔍 확대</b> 두 손가락으로 벌리면 확대, ✋ 로 화면을 옮겨요.</li><li><b>🏆 별</b> 도움(힌트·확인)을 안 쓰면 ★3. 랜덤·오늘의 문제는 시간 기록이 남아요.</li></ul></div>';
+
   const PEOPLE = ['appa', 'eomma', 'hayoon', 'hajun', 'guest'], SCALE = [523, 587, 659, 784, 880, 1047, 1175];
+  let moreEl = null, howOpen = false, saveT = 0, hit = null, hitKey = '', tdown = null;
   let ui = null, sel = null, loop = null, phase = 'select', gen = 0, cur = 0, S = null, tm = 0, shake = 0;
   let mode = 'level', msize = 5, mseed = '', tmr = 0, started = false, view = { z:1, px:0, py:0 }, panMode = false, ptrs = new Map(), pinch = null, genCache = {}, tbtn = [];
   let drag = null, uses = 0, hintE = -1, hintV = 0, hintT = 0, wrongT = 0, wrongSet = [], drops = [], floats = [], dust = [], undoBtn = null, skipBtn = null, geo = null, winT = 0, inside = [];
@@ -7569,38 +7738,63 @@ const Fence=(function(){
   function rndSave(who, fn){ try{ const all = rndAll(), o = all[who] || {}; o.cnt = o.cnt || {}; o.best = o.best || {}; o.day = o.day || {}; fn(o); const keep = Object.keys(o.day).sort().slice(-14); const nd = {}; keep.forEach(k=>nd[k] = o.day[k]); o.day = nd; all[who] = o; localStorage.setItem(RND_KEY, JSON.stringify(all)); }catch(e){} }
   const fmt = sec=>{ sec = Math.max(0, Math.floor(sec)); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
 
+  const ago = t=>{ const m = Math.max(0, Math.floor((Date.now() - (t || 0)) / 60000)); return m < 1 ? '방금' : m < 60 ? m + '분 전' : m < 1440 ? Math.floor(m / 60) + '시간 전' : Math.floor(m / 1440) + '일 전'; };
+  const buzz = ms=>{ try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){} };
+  /* ── 중간 저장 · 이어하기 (가족별 1판) ── */
+  function saveAll(){ try{ return JSON.parse(localStorage.getItem(SAVE_KEY) || '{}') || {}; }catch(e){ return {}; } }
+  function saveOf(who){ const o = saveAll()[who]; return o && typeof o.st === 'string' ? o : null; }
+  function saveGame(){
+    try{
+      if(!S || phase !== 'play' || !S.hist.length) return;
+      const o = saveAll(); o[arcWho] = { mode, cur, n:msize, seed:mseed, st:Array.from(S.st).join(''), h:S.hist.slice(-600), tmr:Math.floor(tmr), u:uses, z:view.z, px:view.px, py:view.py, t:Date.now() };
+      localStorage.setItem(SAVE_KEY, JSON.stringify(o));
+    }catch(e){}
+  }
+  function clearSave(who){ try{ const o = saveAll(), w = who || arcWho; if(o[w]){ delete o[w]; localStorage.setItem(SAVE_KEY, JSON.stringify(o)); } }catch(e){} }
+  function applySave(sv){
+    if(!sv || !S || typeof sv.st !== 'string' || sv.st.length !== S.st.length) return;
+    for(let i = 0; i < sv.st.length; i++) S.st[i] = +sv.st[i] | 0;
+    S.hist = Array.isArray(sv.h) ? sv.h.filter(x=>Array.isArray(x) && x.length === 2) : [];
+    tmr = +sv.tmr || 0; uses = sv.u | 0; started = true;
+    if(sv.z){ view.z = sv.z; view.px = sv.px; view.py = sv.py; clampView(); }
+    paintHud(); syncSkip();
+  }
+  function resumeGame(){ const sv = saveOf(arcWho); if(!sv) return; if(sv.mode === 'level' && sv.cur >= 0 && sv.cur < N) playLevel(sv.cur, sv); else if(sv.mode !== 'level') startMode(sv.mode, sv.n, sv.seed, sv); else clearSave(); }
+
   /* ── 만들기 ── */
   function build(){
     if(ui) return;
     ui = arcShell($('arcFence'), { id:'fence', name:'울타리 치기', en:'Loop Fence', stat:'별', pad:'fence', hud:true, tip:'' });
-    const mk = (lab, cls, fn)=>{ const b = arcEl('button', 'arc-bigbtn tw ' + cls, lab); b.type = 'button'; b.addEventListener('click', fn); return b; };
-    undoBtn = mk('↩ 되돌리기', 'd mv', doUndo);
-    ui.pad.appendChild(undoBtn); ui.pad.appendChild(mk('💡 힌트', 'd mv', doHint)); ui.pad.appendChild(mk('✅ 확인', 'd mv', doCheck));
-    const br = document.createElement('span'); br.className = 'row2'; ui.pad.appendChild(br);
-    ui.pad.appendChild(mk('🔢 판 선택', 'd sm', ()=>{ if(phase !== 'select') showSelect(); }));
-    ui.pad.appendChild(mk('↺ 다시', 'd sm', ()=>{ if(phase !== 'select') play(cur); }));
-    skipBtn = mk('⏭ 건너뛰기', 'g sm', ()=>{ if(canSkip()){ progSkip(); play(Math.min(N - 1, cur + 1)); } }); skipBtn.style.display = 'none'; ui.pad.appendChild(skipBtn);
+    const mk = (lab, fn, cls)=>{ const b = arcEl('button', 'fn-btn' + (cls ? ' ' + cls : ''), lab); b.type = 'button'; b.addEventListener('click', fn); return b; };
+    undoBtn = mk('↩ 되돌리기', doUndo); ui.pad.appendChild(undoBtn); ui.pad.appendChild(mk('💡 힌트', doHint)); ui.pad.appendChild(mk('✅ 확인', doCheck));
+    const mb = mk('⋯', ()=>moreEl.classList.toggle('on'), 'fn-mb'); mb.setAttribute('aria-label', '더보기'); ui.pad.appendChild(mb);
+    moreEl = arcEl('div', 'fn-more');
+    const mi = (lab, fn)=>{ const b = arcEl('button', 'fn-mi', lab); b.type = 'button'; b.addEventListener('click', ()=>{ moreEl.classList.remove('on'); fn(); }); moreEl.appendChild(b); return b; };
+    mi('🔢 판 선택', ()=>{ if(phase !== 'select') showSelect(); }); mi('↺ 다시', askRestart); mi('❓ 게임 방법', showHow);
+    skipBtn = mi('⏭ 건너뛰기', ()=>{ if(canSkip()){ progSkip(); play(Math.min(N - 1, cur + 1)); } }); skipBtn.style.display = 'none';
+    ui.pad.appendChild(moreEl);
+    document.addEventListener('visibilitychange', ()=>{ if(document.hidden) saveGame(); }); window.addEventListener('pagehide', saveGame);
     sel = arcEl('div', 'fn-selpg'); ui.root.insertBefore(sel, ui.root.querySelector('.arc-screen'));
-    ui.cv.style.touchAction = 'none';
+    ui.cv.style.touchAction = 'pan-y'; hit = arcEl('div', 'fn-hit'); ui.cv.parentNode.insertBefore(hit, ui.cv.nextSibling);   // 판 밖은 화면 스크롤, 판 위(hit)만 터치를 가져감
     const cpos = e=>{ const r = ui.cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * W, (e.clientY - r.top) / r.height * H]; };
     const gpos = p=>[(p[0] - VP.x - view.px) / view.z / geo.cs, (p[1] - VP.y - view.py) / view.z / geo.cs];
     const inVP = p=>p[0] >= VP.x && p[0] <= VP.x + VP.w && p[1] >= VP.y && p[1] <= VP.y + VP.h;
     const undoDrag = ()=>{ if(drag){ for(let i = 0; i < drag.n; i++) K.undo(S); drag.n = 0; paintHud(); } drag = null; };
-    ui.cv.addEventListener('pointerdown', e=>{
+    const onDown = e=>{
       e.preventDefault();
       if(!geo || (phase !== 'play' && phase !== 'win')) return;
       const p = cpos(e);
-      if(phase === 'play') for(let i = 0; i < tbtn.length; i++){ const t = tbtn[i]; if(Math.hypot(p[0] - t.x, p[1] - t.y) <= t.r + 4){ t.fn(); tone(560, .04, .05); return; } }
+      if(phase === 'play') for(let i = 0; i < tbtn.length; i++){ const t = tbtn[i]; if(Math.hypot(p[0] - t.x, p[1] - t.y) <= t.r + 4){ tdown = { t, x:p[0], y:p[1], id:e.pointerId }; return; } }
       if(!inVP(p)) return;
-      try{ ui.cv.setPointerCapture(e.pointerId); }catch(er){}
+      try{ e.currentTarget.setPointerCapture(e.pointerId); }catch(er){}
       ptrs.set(e.pointerId, p);
       if(ptrs.size === 2){ undoDrag(); const a = Array.from(ptrs.values()); pinch = { d:Math.hypot(a[0][0] - a[1][0], a[0][1] - a[1][1]) || 1, mx:(a[0][0] + a[1][0]) / 2, my:(a[0][1] + a[1][1]) / 2 }; return; }
       if(ptrs.size > 2 || phase !== 'play') return;
       if(panMode){ drag = { id:e.pointerId, pan:true, x:p[0], y:p[1], n:0 }; return; }
       const g = gpos(p), ed = K.pick(S.R, S.C, g[0], g[1], .46); if(ed < 0) return;
       const v = K.nextState(S.st[ed]); drag = { id:e.pointerId, v, last:ed, n:1 }; apply(ed, v);
-    });
-    ui.cv.addEventListener('pointermove', e=>{
+    };
+    const onMove = e=>{
       if(!ptrs.has(e.pointerId)) return; const p = cpos(e); ptrs.set(e.pointerId, p);
       if(ptrs.size === 2 && pinch){
         const a = Array.from(ptrs.values()), d = Math.hypot(a[0][0] - a[1][0], a[0][1] - a[1][1]) || 1, mx = (a[0][0] + a[1][0]) / 2, my = (a[0][1] + a[1][1]) / 2;
@@ -7609,31 +7803,56 @@ const Fence=(function(){
       if(!drag || drag.id !== e.pointerId || phase !== 'play') return;
       if(drag.pan){ view.px += p[0] - drag.x; view.py += p[1] - drag.y; drag.x = p[0]; drag.y = p[1]; clampView(); return; }
       const g = gpos(p), ed = K.pick(S.R, S.C, g[0], g[1], .3); if(ed < 0 || ed === drag.last) return; drag.last = ed; const dd = drag, n0 = S.hist.length; apply(ed, dd.v); if(S.hist.length > n0) dd.n++;
-    });
-    const dragEnd = e=>{ ptrs.delete(e.pointerId); if(ptrs.size < 2) pinch = null; if(drag && drag.id === e.pointerId) drag = null; };
-    ui.cv.addEventListener('pointerup', dragEnd); ui.cv.addEventListener('pointercancel', dragEnd);
-    ui.cv.addEventListener('wheel', e=>{ if(!geo || phase === 'select') return; e.preventDefault(); const p = cpos(e); zoomAt(p[0], p[1], view.z * (e.deltaY < 0 ? 1.15 : 1 / 1.15)); clampView(); }, { passive:false });
+    };
+    const dragEnd = e=>{
+      if(tdown && tdown.id === e.pointerId){ const q = tdown; tdown = null; if(e.type === 'pointerup'){ const p = cpos(e); if(Math.hypot(p[0] - q.x, p[1] - q.y) < 14){ q.t.fn(); tone(560, .04, .05); } } return; }
+      ptrs.delete(e.pointerId); if(ptrs.size < 2) pinch = null; if(drag && drag.id === e.pointerId) drag = null; };
+    [ui.cv, hit].forEach(el=>{ el.addEventListener('pointerdown', onDown); el.addEventListener('pointermove', onMove); el.addEventListener('pointerup', dragEnd); el.addEventListener('pointercancel', dragEnd); });
+    [ui.cv, hit].forEach(el=>el.addEventListener('wheel', e=>{ if(!geo || phase === 'select') return; e.preventDefault(); const p = cpos(e); zoomAt(p[0], p[1], view.z * (e.deltaY < 0 ? 1.15 : 1 / 1.15)); clampView(); }, { passive:false }));
     window.addEventListener('resize', ()=>{ if(ui && S && !loop && phase !== 'select') draw(); });
     updateTip();
   }
   function updateTip(){
-    if(ui) ui.tip.innerHTML = '🏡 점과 점 사이를 <b>톡</b> 눌러 울타리 선을 그어요(한 번 더 누르면 <b>✕</b>, 또 누르면 지워져요. 끌면 쭉 그려져요). 숫자는 그 칸 둘레의 <b>선 수</b>! 선이 <b>갈라지거나 겹치지 않는 하나의 고리</b>가 되면 성공이에요. 큰 판은 <b>두 손가락으로 벌려서 확대</b>하고, ✋로 화면을 옮겨요. 막히면 ↩ 되돌리기 · 💡 힌트 · ✅ 확인';
+    if(ui) ui.tip.innerHTML = '🏡 점과 점 사이를 <b>톡</b> 눌러 울타리 선을 그어요(한 번 더 누르면 <b>✕</b>, 또 누르면 지워져요. 끌면 쭉 그려져요). 숫자는 그 칸 둘레의 <b>선 수</b>! 선이 <b>갈라지거나 겹치지 않는 하나의 고리</b>가 되면 성공이에요. 큰 판은 <b>두 손가락으로 벌려서 확대</b>하고, ✋로 화면을 옮겨요. 막히면 ↩ 되돌리기 · 💡 힌트 · ✅ 확인. <b>중간에 나가도 저장</b>돼서 이어서 할 수 있어요';
+  }
+
+  function showHow(){
+    if(!ui || phase !== 'play') return;
+    howOpen = true; arcOverlay(ui, '<h3>❓ 게임 방법</h3>' + HOW_HTML, [{ label:'알겠어요', fn:()=>{ howOpen = false; arcOverlay(ui, null); } }]);
+  }
+  function askRestart(){
+    if(!ui || !S || phase === 'select') return;
+    const go = ()=>{ howOpen = false; clearSave(); if(mode === 'level') playLevel(cur); else replay(); };
+    if(!S.hist.length || phase === 'win'){ go(); return; }
+    howOpen = true; arcOverlay(ui, '<h3>↺ 처음부터 다시?</h3><p class="arc-sub">지금까지 그은 선이 모두 지워져요</p>', [{ label:'다시 하기', fn:go }, { label:'계속하기', cls:'ghost', fn:()=>{ howOpen = false; arcOverlay(ui, null); } }]);
+  }
+
+  // 터치를 가져가는 영역 = 지금 화면에 보이는 판(+가장자리 8px). 그 밖은 브라우저가 화면을 스크롤한다.
+  function syncHit(){
+    if(!hit || !S || !geo) return;
+    const bw = S.C * geo.cs * view.z, bh = S.R * geo.cs * view.z, m = 8;
+    const x0 = Math.max(VP.x, VP.x + view.px - m), y0 = Math.max(VP.y, VP.y + view.py - m), x1 = Math.min(VP.x + VP.w, VP.x + view.px + bw + m), y1 = Math.min(VP.y + VP.h, VP.y + view.py + bh + m);
+    const k = [x0, y0, x1, y1].map(v=>Math.round(v * 10)).join(',');
+    if(k === hitKey) return; hitKey = k;
+    hit.style.left = (x0 / W * 100) + '%'; hit.style.top = (y0 / H * 100) + '%'; hit.style.width = (Math.max(0, x1 - x0) / W * 100) + '%'; hit.style.height = (Math.max(0, y1 - y0) / H * 100) + '%';
   }
 
   /* ── 확대 · 이동 ── */
   const ZMIN = .6, ZMAX = 4;
-  function boardSize(){ return S ? [S.C * geo.cs, S.R * geo.cs] : [0, 0]; }
+  function boardSize(){ if(!S) return [0, 0]; if(!geo) layout(); return [S.C * geo.cs, S.R * geo.cs]; }
+  // 판의 어느 모서리든 화면 한가운데까지 끌어올 수 있다(자유 이동)
   function clampView(){
-    if(!S || !geo) return; const bs = boardSize(), m = 12;
+    if(!S) return; if(!geo) layout(); const bs = boardSize();
     view.z = Math.max(ZMIN, Math.min(ZMAX, view.z));
     const bw = bs[0] * view.z, bh = bs[1] * view.z;
-    view.px = bw + 2 * m <= VP.w ? (VP.w - bw) / 2 : Math.max(VP.w - bw - m, Math.min(m, view.px));
-    view.py = bh + 2 * m <= VP.h ? (VP.h - bh) / 2 : Math.max(VP.h - bh - m, Math.min(m, view.py));
+    view.px = Math.max(VP.w / 2 - bw, Math.min(VP.w / 2, view.px));
+    view.py = Math.max(VP.h / 2 - bh, Math.min(VP.h / 2, view.py));
   }
   function zoomAt(sx, sy, nz){ nz = Math.max(ZMIN, Math.min(ZMAX, nz)); const k = nz / view.z, lx = sx - VP.x, ly = sy - VP.y; view.px = lx - (lx - view.px) * k; view.py = ly - (ly - view.py) * k; view.z = nz; }
   function fitView(first){
-    if(!S) return; const n = Math.max(S.R, S.C); view.z = first ? (n >= 20 ? 2 : n >= 15 ? 1.45 : 1) : 1; view.px = -999; view.py = -999;
-    if(view.z === 1){ view.px = 0; view.py = 0; } clampView(); if(view.z > 1){ view.px = 12; view.py = 12; clampView(); }
+    if(!S) return; if(!geo) layout(); const n = Math.max(S.R, S.C), bs = boardSize(); view.z = first ? (n >= 20 ? 2 : n >= 15 ? 1.45 : 1) : 1;
+    const bw = bs[0] * view.z, bh = bs[1] * view.z;
+    view.px = bw + 24 <= VP.w ? (VP.w - bw) / 2 : 12; view.py = bh + 24 <= VP.h ? (VP.h - bh) / 2 : 12; clampView();
   }
   function zoomBtn(f){ zoomAt(VP.x + VP.w / 2, VP.y + VP.h / 2, view.z * f); clampView(); }
   function seeEdge(e){
@@ -7651,14 +7870,14 @@ const Fence=(function(){
     const r = rndOf(arcWho), td = today(); let h = '<div class="fn-sizes">';
     SIZES.forEach(n=>{
       let mark = '';
-      if(m === 'daily'){ const d = (r.day[td] || {})[n]; mark = d ? '✔ ' + (d.u ? '완료' : fmt(d.t)) : '오늘 새 문제'; }
-      else { const b = r.best[n], c = r.cnt[n] | 0; mark = b != null ? '🏅 ' + fmt(b) : c ? '✔ ' + c + '회' : '새 문제'; }
-      h += '<button type="button" data-m="' + m + '" data-n="' + n + '"><b>' + n + '×' + n + '</b><small>' + SNAME[n] + '</small><i>' + mark + '</i></button>';
+      if(m === 'daily'){ const d = (r.day[td] || {})[n]; mark = d ? '✔ ' + (d.u ? '완료' : fmt(d.t)) : ''; }
+      else { const b = r.best[n], c = r.cnt[n] | 0; mark = b != null ? '🏅 ' + fmt(b) : c ? '✔ ' + c + '회' : ''; }
+      h += '<button type="button" data-m="' + m + '" data-n="' + n + '"><b>' + n + '×' + n + '</b><small>' + SNAME[n] + '</small>' + (mark ? '<i>' + mark + '</i>' : '') + '</button>';
     });
     return h + '</div>';
   }
   function showSelect(openLv){
-    if(loop){ loop.stop(); loop = null; } gen++; phase = 'select'; arcPlaying(ui, false);
+    saveGame(); howOpen = false; if(loop){ loop.stop(); loop = null; } gen++; phase = 'select'; arcPlaying(ui, false);
     const pr = progOf(arcWho); let g = '';
     for(let t = 0; t < THEMES.length; t++){
       const th = THEMES[t]; if(TSTART[t] >= N) break; g += '<div class="b2b-th">' + th.ico + ' ' + th.name + ' · ' + th.n + '×' + th.n + '</div><div class="b2b-levels">';
@@ -7670,41 +7889,44 @@ const Fence=(function(){
     }
     if(!S){ S = K.create(LEVELS[cur < 0 ? 0 : cur]); fitView(true); }
     ui.root.classList.add('fn-selmode');
-    sel.innerHTML = '<div class="fn-hero"><h3>🏡 울타리 치기</h3><p>점을 이어 <b>하나의 울타리 고리</b>를 만들어요 · 숫자 = 그 칸 둘레의 선 수</p></div>' +
+    const sv = saveOf(arcWho); let rs = '';
+    if(sv){ const lines = (sv.st.match(/1/g) || []).length, lab = sv.mode === 'level' ? '🪜 단계 ' + (sv.cur + 1) + '번 판' : (sv.mode === 'daily' ? '📅 오늘의 문제 ' : '🎲 랜덤 ') + sv.n + '×' + sv.n; rs = '<button type="button" class="fn-resume"><span class="rl">▶ 이어하기</span><span class="rm">' + lab + (sv.mode !== 'level' ? ' · ⏱ ' + fmt(sv.tmr) : ' · 선 ' + lines + '개') + ' · ' + ago(sv.t) + '</span></button>'; }
+    sel.innerHTML = '<div class="fn-hero"><h3>🏡 울타리 치기</h3><p>점을 이어 <b>하나의 울타리 고리</b>를 만들어요</p></div>' + rs +
       '<div class="fn-sec"><b>📅 오늘의 문제</b><small>날마다 새로 · 모두 같은 문제</small></div>' + sizeBtns('daily') +
       '<div class="fn-sec"><b>🎲 랜덤 문제</b><small>누를 때마다 새 문제</small></div>' + sizeBtns('random') +
       '<div class="fn-sec"><b>🪜 단계 도전 30판</b><small>⭐ ' + total(arcWho) + ' / ' + N * MAXST + '</small></div><div class="fn-lv">' + g + '</div>';
+    const rb = sel.querySelector('.fn-resume'); if(rb) rb.addEventListener('click', ev=>{ ev.stopPropagation(); resumeGame(); });
     sel.querySelectorAll('.b2b-levels button').forEach(b=>b.addEventListener('click', ev=>{ ev.stopPropagation(); playLevel(+b.dataset.i); }));
     sel.querySelectorAll('.fn-sizes button').forEach(b=>b.addEventListener('click', ev=>{ ev.stopPropagation(); startMode(b.dataset.m, +b.dataset.n); }));
     arcOverlay(ui, null); paintSide();
     if(openLv){ const lv = sel.querySelector('.fn-lv'); if(lv) setTimeout(()=>{ try{ lv.scrollIntoView({ block:'start' }); }catch(e){} }, 30); }
   }
-  function leaveSelect(){ ui.root.classList.remove('fn-selmode'); const mk = sel && sel.querySelector('.fn-make'); if(mk) mk.remove(); }
+  function leaveSelect(){ howOpen = false; ui.root.classList.remove('fn-selmode'); const mk = sel && sel.querySelector('.fn-make'); if(mk) mk.remove(); }
   function makePuzzle(m, n, seed){
     const key = m + ':' + n + ':' + seed; if(genCache[key]) return genCache[key];
     const t0 = Date.now(); let p = K.generate(n, n, seed, SLV[n]);
     if(!p) p = K.generate(n, n, seed + 'x', SLV[n]);
     if(!p) return null; p.gms = Date.now() - t0; genCache[key] = p; const ks = Object.keys(genCache); if(ks.length > 8) delete genCache[ks[0]]; return p;
   }
-  function startMode(m, n, seedOverride){
+  function startMode(m, n, seedOverride, sv){
     const seed = seedOverride || (m === 'daily' ? 'daily:' + today() + ':' + n : 'r' + Date.now() + ':' + Math.floor(Math.random() * 1e9) + ':' + n);
     if(sel){ const o = sel.querySelector('.fn-make'); if(o) o.remove(); const d = document.createElement('div'); d.className = 'fn-make'; d.innerHTML = '<div><h3>🧩 문제 만드는 중…</h3><p>' + n + '×' + n + ' · ' + SNAME[n] + '</p></div>'; sel.appendChild(d); }
     const my = ++gen;
     setTimeout(()=>{
       if(my !== gen) return; const p = makePuzzle(m, n, seed);
       if(!p){ showSelect(); arcToast(ui, '😵 문제를 만들지 못했어요. 다시 눌러 주세요', 2200); return; }
-      playPuzzle(p, m, n, seed);
+      playPuzzle(p, m, n, seed, sv);
     }, 60);
   }
   function resetPlay(){ uses = 0; hintE = -1; hintT = 0; wrongT = 0; wrongSet = []; drops = []; floats = []; dust = []; winT = 0; inside = []; tmr = 0; started = false; ptrs.clear(); pinch = null; drag = null; panMode = false; }
-  function playPuzzle(p, m, n, seed){
-    mode = m; msize = n; mseed = seed; cur = -1; S = K.create(p); resetPlay(); fitView(true);
+  function playPuzzle(p, m, n, seed, sv){
+    mode = m; msize = n; mseed = seed; cur = -1; S = K.create(p); resetPlay(); fitView(true); if(sv) applySave(sv);
     phase = 'play'; leaveSelect(); arcOverlay(ui, null); arcSfx('start'); updateTip(); paintSide(); arcScrollIn(ui);
-    FamFx.hintOnce(ui, 'fence', '🏡 점 사이를 톡! 큰 판은 두 손가락으로 벌려 확대해요', 5200);
+    FamFx.hintOnce(ui, 'fence', '🏡 점 사이를 톡! 큰 판은 벌려서 확대', 5200);
     const my = ++gen; loop = arcLoop(dt=>{ if(my !== gen) return; step(dt); draw(); });
   }
-  function playLevel(i){
-    mode = 'level'; cur = i; S = K.create(LEVELS[cur]); resetPlay(); fitView(true);
+  function playLevel(i, sv){
+    mode = 'level'; cur = i; S = K.create(LEVELS[cur]); resetPlay(); fitView(true); if(sv) applySave(sv);
     phase = 'play'; leaveSelect(); arcOverlay(ui, null); arcSfx('start'); updateTip(); paintSide(); arcScrollIn(ui);
     FamFx.hintOnce(ui, 'fence', '🏡 점 사이를 톡! 숫자만큼 울타리를 치고, 하나의 고리로 이어 봐요', 5200);
     const my = ++gen; loop = arcLoop(dt=>{ if(my !== gen) return; step(dt); draw(); });
@@ -7712,7 +7934,7 @@ const Fence=(function(){
   const play = i=>playLevel(i);
   function replay(){ if(mode === 'level') playLevel(cur); else playPuzzle(makePuzzle(mode, msize, mseed) || S.L, mode, msize, mseed); }
   function pause(){ }
-  function halt(){ if(loop){ loop.stop(); loop = null; } gen++; if(phase !== 'select') phase = 'select'; if(ui && sel) leaveSelect(); }
+  function halt(){ saveGame(); howOpen = false; if(loop){ loop.stop(); loop = null; } gen++; if(phase !== 'select') phase = 'select'; if(ui && sel) leaveSelect(); }
   function key(e, down){
     if(!down || e.repeat) return false;
     if(e.code === 'KeyZ' || e.code === 'Backspace'){ e.preventDefault(); doUndo(); return true; }
@@ -7729,15 +7951,15 @@ const Fence=(function(){
   function apply(ed, v){
     if(!K.set(S, ed, v)) return;
     started = true; hintE = -1; wrongT = 0; const m = edgeMid(ed);
-    tone(v === 1 ? SCALE[(S.hist.length) % 7] : v === 2 ? 330 : 440, .06, .07);
+    tone(v === 1 ? SCALE[(S.hist.length) % 7] : v === 2 ? 330 : 440, .06, .07); buzz(v === 1 ? 8 : 5);
     if(v === 1) FamFx.dust(dust, m[0], m[1], 3, 'rgba(107,88,54,.55)');
-    paintHud(); syncSkip();
+    paintHud(); syncSkip(); saveGame();
     if(K.done(S)) onWin();
   }
   function doUndo(){
     if(!S || phase !== 'play') return;
     if(!K.undo(S)){ tone(200, .05, .06); return; }
-    hintE = -1; wrongT = 0; tone(330, .06, .08); paintHud(); syncSkip();
+    hintE = -1; wrongT = 0; tone(330, .06, .08); paintHud(); syncSkip(); saveGame();
   }
   function doHint(){
     if(!S || phase !== 'play') return;
@@ -7745,13 +7967,13 @@ const Fence=(function(){
     uses++; started = true; hintE = h.e; hintV = h.wrong ? -1 : h.v; hintT = 4; tone(880, .1, .09); seeEdge(h.e);
     if(h.wrong) arcToast(ui, '🔴 빨간 선이 정답과 달라요! 눌러서 고쳐 봐요', 2600);
     else arcToast(ui, h.v === 1 ? '💛 노란 곳에 울타리 <b>선</b>을 그어요' : '🔵 파란 곳은 <b>✕</b>(선이 아니에요)', 2600);
-    paintHud(); syncSkip();
+    paintHud(); syncSkip(); saveGame();
   }
   function doCheck(){
     if(!S || phase !== 'play') return;
-    const w = K.wrongEdges(S); uses++; started = true; paintHud(); syncSkip();
+    const w = K.wrongEdges(S); uses++; started = true; paintHud(); syncSkip(); saveGame();
     if(!w.length){ arcToast(ui, '👍 지금까지 모두 맞아요!', 1800); tone(784, .12, .09); return; }
-    wrongSet = w; wrongT = 3; tone(240, .15, .1); seeEdge(w[0]); arcToast(ui, '🔴 틀린 선이 ' + w.length + '개 있어요 (빨갛게 깜빡여요)', 2600);
+    wrongSet = w; wrongT = 3; tone(240, .15, .1); buzz([30, 40, 30]); seeEdge(w[0]); arcToast(ui, '🔴 틀린 선이 ' + w.length + '개 있어요 (빨갛게 깜빡여요)', 2600);
   }
   function syncSkip(){ if(skipBtn) skipBtn.style.display = canSkip() ? '' : 'none'; }
 
@@ -7762,9 +7984,9 @@ const Fence=(function(){
     return out;
   }
   function onWin(){
-    phase = 'win'; hintE = -1; wrongT = 0; ptrs.clear(); pinch = null; drag = null;
+    phase = 'win'; clearSave(); howOpen = false; hintE = -1; wrongT = 0; ptrs.clear(); pinch = null; drag = null;
     const who = arcWho; let html, btns = [], st = 0, line = '';
-    inside = insideCells(); winT = 0; arcSfx('win');
+    inside = insideCells(); winT = 0; arcSfx('win'); buzz([40, 60, 40, 60, 90]);
     for(let i = 0; i < 16; i++) drops.push({ x:30 + Math.random() * 300, y:-20 - Math.random() * 160, vx:(Math.random() - .5) * 60, vy:60 + Math.random() * 120, v:Math.floor(Math.random() * 5), t:0 });
     const my = gen;
     if(mode === 'level'){
@@ -7819,7 +8041,8 @@ const Fence=(function(){
   /* ── 움직임 ── */
   function step(dt){
     tm += dt; shake = Math.max(0, shake - dt * 2.4);
-    if(phase === 'play' && started && mode !== 'level'){ const a = Math.floor(tmr); tmr += dt; if(Math.floor(tmr) !== a) paintHud(); }
+    if(phase === 'play' && started && !howOpen){ saveT += dt; if(saveT > 5){ saveT = 0; saveGame(); } }
+    if(phase === 'play' && started && mode !== 'level' && !howOpen){ const a = Math.floor(tmr); tmr += dt; if(Math.floor(tmr) !== a) paintHud(); }
     if(hintT > 0){ hintT -= dt; if(hintT <= 0) hintE = -1; }
     if(wrongT > 0){ wrongT -= dt; if(wrongT <= 0) wrongSet = []; }
     FamFx.stepParts(dust, dt);
@@ -7834,7 +8057,7 @@ const Fence=(function(){
   function draw(){
     if(!ui || !S) return;
     arcFit(ui, W, H); const c = ui.ctx, g = layout(), R = S.R, C = S.C, cs = g.cs, col = arcColor(arcWho), T = S.T;
-    clampView(); const bw = C * cs, bh = R * cs, ox = 0, oy = 0;
+    clampView(); syncHit(); const bw = C * cs, bh = R * cs, ox = 0, oy = 0;
     c.save(); if(shake > 0) c.translate((Math.random() - .5) * 6 * shake, (Math.random() - .5) * 6 * shake);
     const bg = c.createRadialGradient(W / 2, VP.h * .34, 0, W / 2, VP.h * .34, W * .8); bg.addColorStop(0, '#fcf6e6'); bg.addColorStop(.68, '#f3e8cc'); bg.addColorStop(1, '#e6d8b6'); c.fillStyle = bg; c.fillRect(-10, -10, W + 20, H + 20);
     // ── 판 (확대·이동 영역) ──
@@ -7896,7 +8119,7 @@ const Fence=(function(){
     __t:{
       phase:()=>phase, cur:()=>cur, S:()=>S, n:()=>N, levels:()=>LEVELS, play:i=>playLevel(i), select:()=>showSelect(), draw:()=>draw(), apply:(e, v)=>apply(e, v), undo:()=>doUndo(), hint:()=>doHint(), check:()=>doCheck(),
       step:(dt, n)=>{ for(let i = 0; i < (n || 1); i++) step(dt); }, prog:()=>progOf(arcWho), total:()=>total(arcWho), res:()=>S && S._res, uses:()=>uses, canSkip:()=>canSkip(), geo:()=>geo, mid:e=>edgeMid(e), hintE:()=>hintE,
-      mode:()=>mode, view:()=>view, vp:()=>VP, tbtn:()=>tbtn, zoom:f=>zoomBtn(f), panMode:()=>panMode, tmr:()=>tmr, started:()=>started, rnd:()=>rndOf(arcWho), start:(m, n, seed)=>startMode(m, n, seed), msize:()=>msize, gen:(n, seed)=>makePuzzle('t', n, seed)
+      mode:()=>mode, view:()=>view, vp:()=>VP, tbtn:()=>tbtn, zoom:f=>zoomBtn(f), panMode:()=>panMode, tmr:()=>tmr, started:()=>started, rnd:()=>rndOf(arcWho), start:(m, n, seed)=>startMode(m, n, seed), save:()=>saveOf(arcWho), saveNow:()=>saveGame(), resume:()=>resumeGame(), how:()=>showHow(), restart:()=>askRestart(), msize:()=>msize, gen:(n, seed)=>makePuzzle('t', n, seed)
     }
   };
 })();
